@@ -1,3 +1,5 @@
+import { StaveNote, Accidental } from "vexflow";
+
 const noteNamesF = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
 const noteNamesS = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 const circleFifths = ["F", "C", "G", "D", "A", "E", "B"];
@@ -91,6 +93,22 @@ class Note {
     }
     toString(): string {
         return `${this.name}`;
+    }
+    toVexflow(): StaveNote {
+        let name: string = this.name;
+        let accidental: string = "";
+        if (name.length > 1) {
+            accidental = name.slice(1);
+            name = name[0];
+        }
+        let vexNote = new StaveNote({
+            keys: [name + "/4"],
+            duration: "q",
+        });
+        if (accidental.length > 0) {
+            vexNote.addModifier(new Accidental(accidental), 0);
+        }
+        return vexNote;
     }
 
     equals(other: Note): boolean {

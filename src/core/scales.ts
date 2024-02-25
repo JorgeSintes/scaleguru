@@ -1,6 +1,7 @@
 import { Note } from "./notes";
+import { StaveNote } from "vexflow";
 
-abstract class Scale {
+abstract class IScale {
     // Both distances and descending_distances are represented from the bottom note to the top note.
     // descending_distances is null if the scale is not symmetric.
     protected distances: ReadonlyArray<string> = [];
@@ -11,13 +12,15 @@ abstract class Scale {
         this.root = root;
     }
 
-    abstract toString(): string;
-    toVexflow(): string[] {
-        let result: string[] = [];
+    static toString(): string {
+        return "Scale";
+    }
+
+    toVexflow(): StaveNote[] {
+        let result: StaveNote[] = [];
         for (const note of this.ascending()) {
-            result.push(note.toString());
+            result.push(note.toVexflow());
         }
-        result[0] = result[0] + "/q";
         return result;
     }
 
@@ -65,115 +68,129 @@ abstract class Scale {
 }
 
 // Classical scales
-class MajorScale extends Scale {
+class MajorScale extends IScale {
     protected distances: ReadonlyArray<string> = ["2", "2", "b2", "2", "2", "2", "b2"];
 
-    toString(): string {
-        return `${this.root} major scale`;
+    static toString(): string {
+        return "Major";
     }
 }
 
-class MinorScale extends Scale {
+class MinorScale extends IScale {
     protected distances: ReadonlyArray<string> = ["2", "b2", "2", "2", "b2", "2", "2"];
 
-    toString(): string {
-        return `${this.root} minor scale`;
+    static toString(): string {
+        return "Minor";
     }
 }
 
-class HarmonicScale extends Scale {
+class HarmonicScale extends IScale {
     protected distances: ReadonlyArray<string> = ["2", "b2", "2", "2", "b2", "#2", "b2"];
 
-    toString(): string {
-        return `${this.root} harmonic minor scale`;
+    static toString(): string {
+        return "Harmonic minor";
     }
 }
 
-class MelodicScale extends Scale {
+class MelodicScale extends IScale {
     protected distances: ReadonlyArray<string> = ["2", "b2", "2", "2", "2", "2", "b2"];
     protected descending_distances: ReadonlyArray<string> = ["2", "b2", "2", "2", "b2", "2", "2"];
 
-    toString(): string {
-        return `${this.root} melodic minor scale`;
+    static toString(): string {
+        return "Melodic minor";
     }
 }
 
 // Pentatonic scales
-class MajorPentatonicScale extends Scale {
+class MajorPentatonicScale extends IScale {
     protected distances: ReadonlyArray<string> = ["2", "2", "b3", "2", "b3"];
 
-    toString(): string {
-        return `${this.root} major pentatonic scale`;
+    static toString(): string {
+        return "Major pentatonic";
     }
 }
 
-class MinorPentatonicScale extends Scale {
+class MinorPentatonicScale extends IScale {
     protected distances: ReadonlyArray<string> = ["b3", "2", "2", "b3", "2"];
 
-    toString(): string {
-        return `${this.root} minor pentatonic scale`;
+    static toString(): string {
+        return "Minor pentatonic";
     }
 }
 
-class BlueScale extends Scale {
+class BluesScale extends IScale {
     protected distances: ReadonlyArray<string> = ["b3", "2", "#1", "b2", "b3", "2"];
     protected descending_distances: ReadonlyArray<string> = ["b3", "2", "b2", "#1", "b3", "2"];
 
-    toString(): string {
-        return `${this.root} blue scale`;
+    static toString(): string {
+        return "Blues scale";
     }
 }
 
 // Major modes
-class DorianScale extends Scale {
+class DorianScale extends IScale {
     protected distances: ReadonlyArray<string> = ["2", "b2", "2", "2", "2", "b2", "2"];
 
-    toString(): string {
-        return `${this.root} dorian scale`;
+    static toString(): string {
+        return "Dorian scale";
     }
 }
 
-class PhrygianScale extends Scale {
+class PhrygianScale extends IScale {
     protected distances: ReadonlyArray<string> = ["b2", "2", "2", "2", "b2", "2", "2"];
 
-    toString(): string {
-        return `${this.root} phrygian scale`;
+    static toString(): string {
+        return "Phrygian scale";
     }
 }
 
-class LydianScale extends Scale {
+class LydianScale extends IScale {
     protected distances: ReadonlyArray<string> = ["2", "2", "2", "b2", "2", "2", "b2"];
 
-    toString(): string {
-        return `${this.root} lydian scale`;
+    static toString(): string {
+        return "Lydian scale";
     }
 }
 
-class MixolydianScale extends Scale {
+class MixolydianScale extends IScale {
     protected distances: ReadonlyArray<string> = ["2", "2", "b2", "2", "2", "b2", "2"];
 
-    toString(): string {
-        return `${this.root} mixolydian scale`;
+    static toString(): string {
+        return "Mixolydian scale";
     }
 }
 
-class LocrianScale extends Scale {
+class LocrianScale extends IScale {
     protected distances: ReadonlyArray<string> = ["b2", "2", "2", "b2", "2", "2", "2"];
 
-    toString(): string {
-        return `${this.root} locrian scale`;
+    static toString(): string {
+        return "Locrian scale";
     }
 }
 
+type ScaleType =
+    | typeof MajorScale
+    | typeof MinorScale
+    | typeof HarmonicScale
+    | typeof MelodicScale
+    | typeof MajorPentatonicScale
+    | typeof MinorPentatonicScale
+    | typeof BluesScale
+    | typeof DorianScale
+    | typeof PhrygianScale
+    | typeof LydianScale
+    | typeof MixolydianScale
+    | typeof LocrianScale;
+
 export {
-    Scale,
+    ScaleType,
     MajorScale,
     MinorScale,
     HarmonicScale,
     MelodicScale,
     MajorPentatonicScale,
     MinorPentatonicScale,
-    BlueScale,
+    BluesScale,
     DorianScale,
     PhrygianScale,
     LydianScale,
