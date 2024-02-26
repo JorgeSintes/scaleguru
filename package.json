@@ -4,20 +4,13 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "format": "prettier --config .prettierrc 'src/**/*.{ts,tsx}' --write"
+    "watch": "webpack watch"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "JorgeSintes",
+  "license": "MIT",
   "devDependencies": {
-    "autoprefixer": "^10.4.17",
-    "css-loader": "^6.10.0",
-    "postcss": "^8.4.35",
-    "postcss-loader": "^8.1.0",
-    "prettier": "^3.2.5",
-    "style-loader": "^3.3.4",
-    "tailwindcss": "^3.4.1",
+    "@types/vexflow": "^1.2.42",
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",
     "vexflow": "^4.2.3",

@@ -1,10 +1,7 @@
-import { Vex, Flow, Factory, Stave, EasyScore } from "vexflow";
-
 import { allKeys, Note } from "./core/notes";
 import * as Scales from "./core/scales";
 import { ComboBox } from "./components/comboBox";
 import { ScaleView } from "./components/scaleView";
-import "../styles/input.css";
 
 const availableScales: Scales.ScaleType[] = [
     Scales.MajorScale,
@@ -44,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const scaleDropdown = new ComboBox(
             options,
             scaleView.updateComponent.bind(scaleView),
-            Scales.MajorScale,
+            Scales.MajorScale
         );
         scaleDropdown.render(scaleSelectorDiv);
     }

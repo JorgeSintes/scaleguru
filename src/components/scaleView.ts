@@ -1,4 +1,4 @@
-import { Vex } from "vexflow";
+import Vex from "vexflow";
 import { Note } from "../core/notes";
 import { ScaleType } from "../core/scales";
 

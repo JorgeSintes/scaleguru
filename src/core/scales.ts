@@ -1,5 +1,5 @@
 import { Note } from "./notes";
-import { StaveNote } from "vexflow";
+import Vex from "vexflow";
 
 abstract class IScale {
     // Both distances and descending_distances are represented from the bottom note to the top note.
@@ -16,8 +16,8 @@ abstract class IScale {
         return "Scale";
     }
 
-    toVexflow(): StaveNote[] {
-        let result: StaveNote[] = [];
+    toVexflow(): Vex.Flow.StaveNote[] {
+        let result: Vex.Flow.StaveNote[] = [];
         for (const note of this.ascending()) {
             result.push(note.toVexflow());
         }
