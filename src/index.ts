@@ -1,7 +1,7 @@
 import { allKeys, Note } from "./core/notes";
 import * as Scales from "./core/scales";
 import { ComboBox } from "./components/comboBox";
-import { ScaleView } from "./components/scaleView";
+import { ScaleView } from "./components/scaleView/scaleView";
 
 const availableScales: Scales.ScaleType[] = [
     Scales.MajorScale,
@@ -58,14 +58,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const keySelectorDiv = document.getElementById("key-selector");
     if (scaleView && keySelectorDiv) {
         let options = availableNotes;
-        const keyDropdown = new ComboBox(options, scaleView.updateComponent.bind(scaleView), options[0]);
+        const keyDropdown = new ComboBox(
+            "Select key:",
+            options,
+            scaleView.updateComponent.bind(scaleView),
+            options[0]
+        );
         keyDropdown.render(keySelectorDiv);
     }
 
     const scaleSelectorDiv = document.getElementById("scale-selector");
     if (scaleView && scaleSelectorDiv) {
         let options = availableScales;
-        const scaleDropdown = new ComboBox(options, scaleView.updateComponent.bind(scaleView), options[0]);
+        const scaleDropdown = new ComboBox(
+            "Select scale:",
+            options,
+            scaleView.updateComponent.bind(scaleView),
+            options[0]
+        );
         scaleDropdown.render(scaleSelectorDiv);
     }
 });

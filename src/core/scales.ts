@@ -123,7 +123,7 @@ class BluesScale extends IScale {
     protected descending_distances: ReadonlyArray<string> = ["b3", "2", "b2", "#1", "b3", "2"];
 
     static toString(): string {
-        return "Blues scale";
+        return "Blues";
     }
 }
 
@@ -132,7 +132,7 @@ class DorianScale extends IScale {
     protected distances: ReadonlyArray<string> = ["2", "b2", "2", "2", "2", "b2", "2"];
 
     static toString(): string {
-        return "Dorian scale";
+        return "Dorian";
     }
 }
 
@@ -140,7 +140,7 @@ class PhrygianScale extends IScale {
     protected distances: ReadonlyArray<string> = ["b2", "2", "2", "2", "b2", "2", "2"];
 
     static toString(): string {
-        return "Phrygian scale";
+        return "Phrygian";
     }
 }
 
@@ -148,7 +148,7 @@ class LydianScale extends IScale {
     protected distances: ReadonlyArray<string> = ["2", "2", "2", "b2", "2", "2", "b2"];
 
     static toString(): string {
-        return "Lydian scale";
+        return "Lydian";
     }
 }
 
@@ -156,7 +156,7 @@ class MixolydianScale extends IScale {
     protected distances: ReadonlyArray<string> = ["2", "2", "b2", "2", "2", "b2", "2"];
 
     static toString(): string {
-        return "Mixolydian scale";
+        return "Mixolydian";
     }
 }
 
@@ -164,7 +164,7 @@ class LocrianScale extends IScale {
     protected distances: ReadonlyArray<string> = ["b2", "2", "2", "b2", "2", "2", "2"];
 
     static toString(): string {
-        return "Locrian scale";
+        return "Locrian";
     }
 }
 

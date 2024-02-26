@@ -1,23 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Scale Visualizer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="../styles/pico.blue.css">
+    <title>ScaleGuru</title>
 
 </head>
 <body>
-    <div id="dropdown-menus" class="flex flex-row">
-        <!-- Dropdown menus will be injected here by TypeScript -->
-        <div id="key-selector"></div>
-        <div id="scale-selector"></div>
-    </div>
-    <div id="scale-view" class="">
-        <!-- The staff with the selected scale will be rendered here -->
-    </div>
+    <header class="container">
+        <nav>
+            <ul>
+                <li><h1>ScaleGuru</h1></li>
+            </ul>
+            <ul>
+                <li><a href="#">Visualizer</a></li>
+                <li><a href="#">Practice</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="container">
+        <div id="dropdown-menus" class="grid">
+            <!-- Dropdown menus will be injected here by TypeScript -->
+            <div id="key-selector"></div>
+            <div id="scale-selector"></div>
+        </div>
+        <div id="scale-view" class="">
+            <!-- The staff with the selected scale will be rendered here -->
+        </div>
 
-    <!-- Include your compiled JavaScript file -->
-    <script type="module" src="../dist/bundle.js"></script>
-    <!-- <script src="/dist/index.js"></script> -->
+        <!-- Include your compiled JavaScript file -->
+        <script type="module" src="../dist/bundle.js"></script>
+        <!-- <script src="/dist/index.js"></script> -->
+    </main>
 </body>
 </html>
