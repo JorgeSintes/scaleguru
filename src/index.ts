@@ -18,6 +18,26 @@ const availableScales: Scales.ScaleType[] = [
     Scales.LocrianScale,
 ];
 
+const availableNotes: Note[] = [
+    new Note("C", 4),
+    new Note("C#", 4),
+    new Note("Db", 4),
+    new Note("D", 4),
+    new Note("D#", 4),
+    new Note("Eb", 4),
+    new Note("E", 4),
+    new Note("F", 4),
+    new Note("F#", 4),
+    new Note("Gb", 4),
+    new Note("G", 4),
+    new Note("G#", 4),
+    new Note("Ab", 4),
+    new Note("A", 4),
+    new Note("A#", 4),
+    new Note("Bb", 3),
+    new Note("B", 3),
+];
+
 document.addEventListener("DOMContentLoaded", () => {
     // const keySelectorDiv = document.getElementById("key-selector");
     // if (keySelectorDiv) {
@@ -35,14 +55,17 @@ document.addEventListener("DOMContentLoaded", () => {
         scaleView.render(scaleViewDiv);
     }
 
+    const keySelectorDiv = document.getElementById("key-selector");
+    if (scaleView && keySelectorDiv) {
+        let options = availableNotes;
+        const keyDropdown = new ComboBox(options, scaleView.updateComponent.bind(scaleView), options[0]);
+        keyDropdown.render(keySelectorDiv);
+    }
+
     const scaleSelectorDiv = document.getElementById("scale-selector");
     if (scaleView && scaleSelectorDiv) {
         let options = availableScales;
-        const scaleDropdown = new ComboBox(
-            options,
-            scaleView.updateComponent.bind(scaleView),
-            Scales.MajorScale
-        );
+        const scaleDropdown = new ComboBox(options, scaleView.updateComponent.bind(scaleView), options[0]);
         scaleDropdown.render(scaleSelectorDiv);
     }
 });

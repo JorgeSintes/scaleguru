@@ -159,50 +159,41 @@ class Note {
 
     // Intervals
     minorSecond(): Note {
-        let nextNote = new Note(
-            naturalNoteNames[(naturalNoteNames.indexOf(this.name[0]) + 1) % 7],
-            this.octave
-        );
-        let nextOctave = nextNote.position >= this.position ? this.octave : this.octave + 1;
+        let thisNoteIdx = naturalNoteNames.indexOf(this.name[0]);
+        let nextNoteIdx = (thisNoteIdx + 1) % 7;
+        let nextOctave = nextNoteIdx > thisNoteIdx ? this.octave : this.octave + 1;
+        let nextNote = new Note(naturalNoteNames[nextNoteIdx], nextOctave);
         let diff = this.distanceTo(nextNote) - 1;
         if (diff < 0) {
             nextNote = new Note(nextNote.name + "#".repeat(Math.abs(diff)), nextOctave);
         } else if (diff > 0) {
             nextNote = new Note(nextNote.name + "b".repeat(diff), nextOctave);
-        } else {
-            nextNote = new Note(nextNote.name, nextOctave);
         }
         return nextNote;
     }
     majorSecond(): Note {
-        let nextNote = new Note(
-            naturalNoteNames[(naturalNoteNames.indexOf(this.name[0]) + 1) % 7],
-            this.octave
-        );
-        let nextOctave = nextNote.position >= this.position ? this.octave : this.octave + 1;
+        let thisNoteIdx = naturalNoteNames.indexOf(this.name[0]);
+        let nextNoteIdx = (thisNoteIdx + 1) % 7;
+        let nextOctave = nextNoteIdx > thisNoteIdx ? this.octave : this.octave + 1;
+        let nextNote = new Note(naturalNoteNames[nextNoteIdx], nextOctave);
         let diff = this.distanceTo(nextNote) - 2;
         if (diff < 0) {
             nextNote = new Note(nextNote.name + "#".repeat(Math.abs(diff)), nextOctave);
         } else if (diff > 0) {
             nextNote = new Note(nextNote.name + "b".repeat(diff), nextOctave);
-        } else {
-            nextNote = new Note(nextNote.name, nextOctave);
         }
         return nextNote;
     }
     augmentedSecond(): Note {
-        let nextNote = new Note(
-            naturalNoteNames[(naturalNoteNames.indexOf(this.name[0]) + 1) % 7],
-            this.octave
-        );
-        let nextOctave = nextNote.position >= this.position ? this.octave : this.octave + 1;
+        let thisNoteIdx = naturalNoteNames.indexOf(this.name[0]);
+        let nextNoteIdx = (thisNoteIdx + 1) % 7;
+        let nextOctave = nextNoteIdx > thisNoteIdx ? this.octave : this.octave + 1;
+        let nextNote = new Note(naturalNoteNames[nextNoteIdx], nextOctave);
         let diff = this.distanceTo(nextNote) - 3;
         if (diff < 0) {
             nextNote = new Note(nextNote.name + "#".repeat(Math.abs(diff)), nextOctave);
         } else if (diff > 0) {
             nextNote = new Note(nextNote.name + "b".repeat(diff), nextOctave);
-        } else {
-            nextNote = new Note(nextNote.name, nextOctave);
         }
         return nextNote;
     }
