@@ -4,6 +4,7 @@
         "rootDir": "./src",
         "outDir": "./dist",
         "removeComments": true,
+        "sourceMap": true,
 
         /* Language and Environment */
         "target": "ES6",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
