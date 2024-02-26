@@ -71,22 +71,23 @@ function reduceAccidentals(note: string): string {
 class Note {
     name: string;
     position: number;
-    constructor(name: string) {
+    octave: number;
+    constructor(name: string, octave: number) {
         if (!isValidNoteName(name)) {
             throw new Error(`Invalid note name: ${name}`);
         }
         this.name = name;
         this.position = noteToInt(this.name);
+        this.octave = octave;
     }
-
-    static fromInt(position: number, accidental: string = "#"): Note {
+    static fromInt(position: number, octave: number, accidental: string = "#"): Note {
         if (accidental !== "#" && accidental !== "b") {
             throw new Error(`Invalid accidental: ${accidental}`);
         }
         if (accidental === "#") {
-            return new Note(noteNamesS[position]);
+            return new Note(noteNamesS[position], octave);
         }
-        return new Note(noteNamesF[position]);
+        return new Note(noteNamesF[position], octave);
     }
     toInt(): number {
         return this.position;
@@ -102,7 +103,7 @@ class Note {
             name = name[0];
         }
         let vexNote = new Vex.Flow.StaveNote({
-            keys: [name + "/4"],
+            keys: [name + `/${this.octave}`],
             duration: "q",
         });
         if (accidental.length > 0) {
@@ -123,63 +124,85 @@ class Note {
     }
 
     reduceAccidentals(): Note {
-        return new Note(reduceAccidentals(this.name));
+        return new Note(reduceAccidentals(this.name), this.octave);
     }
 
     enharmonicEquivalent(): Note {
         if (noteNamesF.includes(this.name)) {
-            return new Note(noteNamesS[this.position]);
+            return new Note(noteNamesS[this.position], this.octave);
         }
-        return new Note(noteNamesF[this.position]);
+        return new Note(noteNamesF[this.position], this.octave);
     }
 
     augment(): Note {
         if (!this.name.endsWith("b")) {
-            return new Note(this.name + "#");
+            return new Note(this.name + "#", this.octave);
         }
-        return new Note(reduceAccidentals(this.name.slice(0, -1)));
+        return new Note(reduceAccidentals(this.name.slice(0, -1)), this.octave);
     }
     diminish(): Note {
         if (!this.name.endsWith("#")) {
-            return new Note(this.name + "b");
+            return new Note(this.name + "b", this.octave);
         }
-        return new Note(reduceAccidentals(this.name.slice(0, -1)));
+        return new Note(reduceAccidentals(this.name.slice(0, -1)), this.octave);
     }
     halfstepUp(): Note {
-        return Note.fromInt((this.position + 1) % 12, "#");
+        let next_position = ((this.position % 12) + 12) % 12;
+        let nextOctave = next_position > this.position ? this.octave : this.octave + 1;
+        return Note.fromInt((this.position + 1) % 12, nextOctave, "#");
     }
     halfstepDown(): Note {
-        return Note.fromInt((this.position + 1) % 12, "b");
+        let next_position = ((this.position % 12) + 12) % 12;
+        let nextOctave = next_position < this.position ? this.octave : this.octave - 1;
+        return Note.fromInt((this.position - 1) % 12, nextOctave, "b");
     }
 
     // Intervals
     minorSecond(): Note {
-        let nextNote = new Note(naturalNoteNames[(naturalNoteNames.indexOf(this.name[0]) + 1) % 7]);
+        let nextNote = new Note(
+            naturalNoteNames[(naturalNoteNames.indexOf(this.name[0]) + 1) % 7],
+            this.octave
+        );
+        let nextOctave = nextNote.position >= this.position ? this.octave : this.octave + 1;
         let diff = this.distanceTo(nextNote) - 1;
         if (diff < 0) {
-            nextNote = new Note(nextNote.name + "#".repeat(Math.abs(diff)));
+            nextNote = new Note(nextNote.name + "#".repeat(Math.abs(diff)), nextOctave);
         } else if (diff > 0) {
-            nextNote = new Note(nextNote.name + "b".repeat(diff));
+            nextNote = new Note(nextNote.name + "b".repeat(diff), nextOctave);
+        } else {
+            nextNote = new Note(nextNote.name, nextOctave);
         }
         return nextNote;
     }
     majorSecond(): Note {
-        let nextNote = new Note(naturalNoteNames[(naturalNoteNames.indexOf(this.name[0]) + 1) % 7]);
+        let nextNote = new Note(
+            naturalNoteNames[(naturalNoteNames.indexOf(this.name[0]) + 1) % 7],
+            this.octave
+        );
+        let nextOctave = nextNote.position >= this.position ? this.octave : this.octave + 1;
         let diff = this.distanceTo(nextNote) - 2;
         if (diff < 0) {
-            nextNote = new Note(nextNote.name + "#".repeat(Math.abs(diff)));
+            nextNote = new Note(nextNote.name + "#".repeat(Math.abs(diff)), nextOctave);
         } else if (diff > 0) {
-            nextNote = new Note(nextNote.name + "b".repeat(diff));
+            nextNote = new Note(nextNote.name + "b".repeat(diff), nextOctave);
+        } else {
+            nextNote = new Note(nextNote.name, nextOctave);
         }
         return nextNote;
     }
     augmentedSecond(): Note {
-        let nextNote = new Note(naturalNoteNames[(naturalNoteNames.indexOf(this.name[0]) + 1) % 7]);
+        let nextNote = new Note(
+            naturalNoteNames[(naturalNoteNames.indexOf(this.name[0]) + 1) % 7],
+            this.octave
+        );
+        let nextOctave = nextNote.position >= this.position ? this.octave : this.octave + 1;
         let diff = this.distanceTo(nextNote) - 3;
         if (diff < 0) {
-            nextNote = new Note(nextNote.name + "#".repeat(Math.abs(diff)));
+            nextNote = new Note(nextNote.name + "#".repeat(Math.abs(diff)), nextOctave);
         } else if (diff > 0) {
-            nextNote = new Note(nextNote.name + "b".repeat(diff));
+            nextNote = new Note(nextNote.name + "b".repeat(diff), nextOctave);
+        } else {
+            nextNote = new Note(nextNote.name, nextOctave);
         }
         return nextNote;
     }

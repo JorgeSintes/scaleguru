@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const scaleViewDiv = document.getElementById("scale-view") as HTMLDivElement;
     let scaleView: ScaleView | undefined;
     if (scaleViewDiv) {
-        scaleView = new ScaleView(new Note("C"), Scales.MajorScale);
+        scaleView = new ScaleView(new Note("C", 4), Scales.MajorScale);
         scaleView.render(scaleViewDiv);
     }
 
