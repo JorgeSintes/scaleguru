@@ -45,7 +45,7 @@ export class ScaleView {
             throw new Error("Root element is not defined");
         }
         const notes = new this.scale(this.root).toVexflow();
-        const staveWidth = Math.min(420, this.scaleContainer.clientWidth - 40);
+        const staveWidth = Math.min(500, this.scaleContainer.clientWidth - 40);
         const staveStartX = (this.scaleContainer.clientWidth - staveWidth) / 2;
         const stave = new Stave(staveStartX, 40, staveWidth);
         stave.addClef("treble").setContext(this.context).draw();

@@ -70,7 +70,6 @@ abstract class IScale {
 // Classical scales
 class MajorScale extends IScale {
     protected distances: ReadonlyArray<string> = ["2", "2", "b2", "2", "2", "2", "b2"];
-
     static toString(): string {
         return "Major";
     }
@@ -78,7 +77,6 @@ class MajorScale extends IScale {
 
 class MinorScale extends IScale {
     protected distances: ReadonlyArray<string> = ["2", "b2", "2", "2", "b2", "2", "2"];
-
     static toString(): string {
         return "Minor";
     }
@@ -86,7 +84,6 @@ class MinorScale extends IScale {
 
 class HarmonicScale extends IScale {
     protected distances: ReadonlyArray<string> = ["2", "b2", "2", "2", "b2", "#2", "b2"];
-
     static toString(): string {
         return "Harmonic minor";
     }
@@ -95,7 +92,6 @@ class HarmonicScale extends IScale {
 class MelodicScale extends IScale {
     protected distances: ReadonlyArray<string> = ["2", "b2", "2", "2", "2", "2", "b2"];
     protected descending_distances: ReadonlyArray<string> = ["2", "b2", "2", "2", "b2", "2", "2"];
-
     static toString(): string {
         return "Melodic minor";
     }
@@ -104,7 +100,6 @@ class MelodicScale extends IScale {
 // Pentatonic scales
 class MajorPentatonicScale extends IScale {
     protected distances: ReadonlyArray<string> = ["2", "2", "b3", "2", "b3"];
-
     static toString(): string {
         return "Major pentatonic";
     }
@@ -112,7 +107,6 @@ class MajorPentatonicScale extends IScale {
 
 class MinorPentatonicScale extends IScale {
     protected distances: ReadonlyArray<string> = ["b3", "2", "2", "b3", "2"];
-
     static toString(): string {
         return "Minor pentatonic";
     }
@@ -121,16 +115,43 @@ class MinorPentatonicScale extends IScale {
 class BluesScale extends IScale {
     protected distances: ReadonlyArray<string> = ["b3", "2", "#1", "b2", "b3", "2"];
     protected descending_distances: ReadonlyArray<string> = ["b3", "2", "b2", "#1", "b3", "2"];
-
     static toString(): string {
         return "Blues";
+    }
+}
+
+// Bebop scales
+class BebopMajorScale extends IScale {
+    protected distances: ReadonlyArray<string> = ["2", "2", "b2", "2", "b2", "#1", "2", "b2"];
+    static toString(): string {
+        return "Bebop major";
+    }
+}
+
+class BebopDominantScale extends IScale {
+    protected distances: ReadonlyArray<string> = ["2", "2", "b2", "2", "2", "b2", "#1", "b2"];
+    static toString(): string {
+        return "Bebop dominant";
+    }
+}
+
+class BebopDorianScale extends IScale {
+    protected distances: ReadonlyArray<string> = ["2", "b2", "#1", "b2", "2", "2", "b2", "2"];
+    static toString(): string {
+        return "Bebop dorian";
+    }
+}
+
+class BebopMelodicMinorScale extends IScale {
+    protected distances: ReadonlyArray<string> = ["2", "b2", "2", "2", "b2", "#1", "b2", "2"];
+    static toString(): string {
+        return "Bebop melodic minor";
     }
 }
 
 // Major modes
 class DorianScale extends IScale {
     protected distances: ReadonlyArray<string> = ["2", "b2", "2", "2", "2", "b2", "2"];
-
     static toString(): string {
         return "Dorian";
     }
@@ -138,7 +159,6 @@ class DorianScale extends IScale {
 
 class PhrygianScale extends IScale {
     protected distances: ReadonlyArray<string> = ["b2", "2", "2", "2", "b2", "2", "2"];
-
     static toString(): string {
         return "Phrygian";
     }
@@ -146,7 +166,6 @@ class PhrygianScale extends IScale {
 
 class LydianScale extends IScale {
     protected distances: ReadonlyArray<string> = ["2", "2", "2", "b2", "2", "2", "b2"];
-
     static toString(): string {
         return "Lydian";
     }
@@ -154,7 +173,6 @@ class LydianScale extends IScale {
 
 class MixolydianScale extends IScale {
     protected distances: ReadonlyArray<string> = ["2", "2", "b2", "2", "2", "b2", "2"];
-
     static toString(): string {
         return "Mixolydian";
     }
@@ -162,7 +180,6 @@ class MixolydianScale extends IScale {
 
 class LocrianScale extends IScale {
     protected distances: ReadonlyArray<string> = ["b2", "2", "2", "b2", "2", "2", "2"];
-
     static toString(): string {
         return "Locrian";
     }
@@ -176,6 +193,10 @@ type ScaleType =
     | typeof MajorPentatonicScale
     | typeof MinorPentatonicScale
     | typeof BluesScale
+    | typeof BebopMajorScale
+    | typeof BebopDominantScale
+    | typeof BebopDorianScale
+    | typeof BebopMelodicMinorScale
     | typeof DorianScale
     | typeof PhrygianScale
     | typeof LydianScale
@@ -191,6 +212,10 @@ export {
     MajorPentatonicScale,
     MinorPentatonicScale,
     BluesScale,
+    BebopMajorScale,
+    BebopDominantScale,
+    BebopDorianScale,
+    BebopMelodicMinorScale,
     DorianScale,
     PhrygianScale,
     LydianScale,

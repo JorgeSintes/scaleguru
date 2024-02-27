@@ -11,6 +11,10 @@ const availableScales: Scales.ScaleType[] = [
     Scales.MajorPentatonicScale,
     Scales.MinorPentatonicScale,
     Scales.BluesScale,
+    Scales.BebopMajorScale,
+    Scales.BebopDominantScale,
+    Scales.BebopDorianScale,
+    Scales.BebopMelodicMinorScale,
     Scales.DorianScale,
     Scales.PhrygianScale,
     Scales.LydianScale,
@@ -36,6 +40,7 @@ const availableNotes: Note[] = [
     new Note("A#", 4),
     new Note("Bb", 3),
     new Note("B", 3),
+    new Note("Cb", 4),
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
