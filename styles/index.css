@@ -1,0 +1,12 @@
+nav img {
+    height: 10rem;
+}
+
+.brand-text {
+    display: none;
+}
+@media (min-width: 600px) {
+    .brand-text {
+        display: inline;
+    }
+}
