@@ -44,42 +44,43 @@ const availableNotes: Note[] = [
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
-    // const keySelectorDiv = document.getElementById("key-selector");
-    // if (keySelectorDiv) {
-    //     const keyDropdown = new MultiSelectDropdown(allKeys);
-    //     keyDropdown.render(keySelectorDiv);
+    // Get cached values or use the first available note and scale
+    const savedKey = localStorage.getItem("key-selector-default");
+    let defaultKey = savedKey
+        ? availableNotes.find((note) => note.toString() === savedKey)
+        : availableNotes[0];
+    defaultKey = defaultKey ? defaultKey : availableNotes[0];
+    const savedScale = localStorage.getItem("scale-selector-default");
+    let defaultScale = savedScale
+        ? availableScales.find((scale) => scale.toString() === savedScale)
+        : availableScales[0];
+    defaultScale = defaultScale ? defaultScale : availableScales[0];
 
-    //     keyDropdown.addEventListener("change", (event) => {
-    //         console.log(event.target.value);
-    //     });
-    // }
     const scaleViewDiv = document.getElementById("scale-view") as HTMLDivElement;
     let scaleView: ScaleView | undefined;
     if (scaleViewDiv) {
-        scaleView = new ScaleView(new Note("C", 4), Scales.MajorScale);
+        scaleView = new ScaleView(defaultKey, defaultScale);
         scaleView.render(scaleViewDiv);
     }
 
     const keySelectorDiv = document.getElementById("key-selector");
     if (scaleView && keySelectorDiv) {
-        let options = availableNotes;
         const keyDropdown = new ComboBox(
             "Select key:",
-            options,
+            availableNotes,
             scaleView.updateComponent.bind(scaleView),
-            options[0]
+            defaultKey
         );
         keyDropdown.render(keySelectorDiv);
     }
 
     const scaleSelectorDiv = document.getElementById("scale-selector");
     if (scaleView && scaleSelectorDiv) {
-        let options = availableScales;
         const scaleDropdown = new ComboBox(
             "Select scale:",
-            options,
+            availableScales,
             scaleView.updateComponent.bind(scaleView),
-            options[0]
+            defaultScale
         );
         scaleDropdown.render(scaleSelectorDiv);
     }

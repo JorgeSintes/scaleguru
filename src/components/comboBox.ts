@@ -47,11 +47,17 @@ export class ComboBox {
             const optionName = option.toString();
             const optionElement = document.createElement("option");
             optionElement.innerText = optionName;
+            if (option === this.selectedOption) {
+                optionElement.selected = true;
+            }
             select.appendChild(optionElement);
         });
         select.onchange = (event) => {
             const selectedIndex = select.selectedIndex;
             this.selectedOption = this.options[selectedIndex];
+            if (this.rootElement) {
+                localStorage.setItem(`${this.rootElement.id}-default`, this.selectedOption.toString());
+            }
             this.onSelectionChange(this.selectedOption); // Call the callback with the selected scale
         };
         // Append elements
