@@ -2,6 +2,8 @@ import { allKeys, Note } from "./core/notes";
 import * as Scales from "./core/scales";
 import { ComboBox } from "./components/comboBox";
 import { ScaleView } from "./components/scaleView/scaleView";
+import "../public/styles/navBar.css";
+import "../public/styles/pico.blue.css";
 
 const availableScales: Scales.ScaleType[] = [
     Scales.MajorScale,

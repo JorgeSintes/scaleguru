@@ -1,8 +1,18 @@
 const path = require("path");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    entry: "./src/index.ts",
+    entry: {
+        main: "./src/inspector.ts",
+        practice: "./src/practice.ts",
+    },
+    output: {
+        path: path.resolve(__dirname, "dist"),
+        filename: "[name].bundle.js",
+    },
     devtool: 'inline-source-map',
+    mode: "development",
     module: {
         rules: [
             {
@@ -12,15 +22,54 @@ module.exports = {
             },
             {
                 test: /\.css$/i,
-                use: ['style-loader', 'css-loader'],
+                use: [MiniCssExtractPlugin.loader, 'css-loader'],
+            },
+            {
+                test: /\.html$/,
+                use: [
+                    {
+                        loader: 'html-loader',
+                        options: {
+                            minimize: true,
+                            sources: {
+                                list: [
+                                    {
+                                        tag: 'img',
+                                        attribute: 'src',
+                                        type: 'src',
+                                    },
+                                ],
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                test: /\.svg$/,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'assets/[name][ext]'
+                },
             },
         ],
     },
     resolve: {
         extensions: [".tsx", ".ts", ".js"],
     },
-    output: {
-        filename: "bundle.js",
-        path: path.resolve(__dirname, "dist"),
-    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './public/inspector.html',
+            filename: 'index.html',
+            chunks: ['main']
+        }),
+        new HtmlWebpackPlugin({
+            template: './public/practice.html',
+            filename: 'practice.html',
+            chunks: ['practice']
+        }),
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+            chunkFilename: '[id].css',
+        }),
+    ]
 };

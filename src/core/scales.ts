@@ -16,6 +16,10 @@ abstract class IScale {
         return "Scale";
     }
 
+    getName(): string {
+        return `${this.root.toString()} ${this.constructor.toString()}`;
+    }
+
     toVexflow(): Vex.Flow.StaveNote[] {
         let result: Vex.Flow.StaveNote[] = [];
         for (const note of this.ascending()) {
@@ -204,6 +208,7 @@ type ScaleType =
     | typeof LocrianScale;
 
 export {
+    IScale,
     ScaleType,
     MajorScale,
     MinorScale,
