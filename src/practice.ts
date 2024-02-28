@@ -55,53 +55,72 @@ const availableRoutines: RoutineType[] = [
     RoutineType.RandomScale,
 ];
 
-class State {}
+const savedNotes = localStorage.getItem("key-selector-practice-default");
+let defaultNotes = savedNotes
+    ? availableNotes.filter((note) => savedNotes.includes(note.toString()))
+    : availableNotes;
+const savedScales = localStorage.getItem("scale-selector-practice-default");
+let defaultScales = savedScales
+    ? availableScales.filter((scale) => savedScales.includes(scale.toString()))
+    : availableScales;
+const savedRoutines = localStorage.getItem("routine-selector-practice-default");
+let defaultRoutine = savedRoutines
+    ? availableRoutines.find((routine) => savedRoutines.includes(routine.toString()))
+    : availableRoutines[0];
+defaultRoutine = defaultRoutine ? defaultRoutine : availableRoutines[0];
+(window as any).keyDropdown = new CheckboxDropdown(
+    "Select keys:",
+    availableNotes,
+    (selectedNotes: CheckboxOptions) => console.log(selectedNotes),
+    defaultNotes
+);
+(window as any).scaleDropdown = new CheckboxDropdown(
+    "Select scales:",
+    availableScales,
+    (selectedScales: CheckboxOptions) => console.log(selectedScales),
+    defaultScales
+);
+(window as any).routineDropdown = new ComboBox(
+    "Select routine:",
+    availableRoutines,
+    (selectedRoutine: ComboBoxOption) => console.log(selectedRoutine),
+    defaultRoutine
+);
 
 document.addEventListener("DOMContentLoaded", () => {
-    const savedNotes = localStorage.getItem("key-selector-practice-default");
-    let defaultNotes = savedNotes
-        ? availableNotes.filter((note) => savedNotes.includes(note.toString()))
-        : availableNotes;
-    const savedScales = localStorage.getItem("scale-selector-practice-default");
-    let defaultScales = savedScales
-        ? availableScales.filter((scale) => savedScales.includes(scale.toString()))
-        : availableScales;
-    const savedRoutines = localStorage.getItem("routine-selector-practice-default");
-    let defaultRoutine = savedRoutines
-        ? availableRoutines.find((routine) => savedRoutines.includes(routine.toString()))
-        : availableRoutines[0];
-    defaultRoutine = defaultRoutine ? defaultRoutine : availableRoutines[0];
-
     const keySelectorDiv = document.getElementById("key-selector-practice");
     if (keySelectorDiv) {
-        const keyDropdown = new CheckboxDropdown(
-            "Select keys:",
-            availableNotes,
-            (selectedNotes: CheckboxOptions) => console.log(selectedNotes),
-            defaultNotes
-        );
-        keyDropdown.render(keySelectorDiv);
+        (window as any).keyDropdown.render(keySelectorDiv);
     }
 
     const scaleSelectorDiv = document.getElementById("scale-selector-practice");
     if (scaleSelectorDiv) {
-        const scaleDropdown = new CheckboxDropdown(
-            "Select scales:",
-            availableScales,
-            (selectedScales: CheckboxOptions) => console.log(selectedScales),
-            defaultScales
-        );
-        scaleDropdown.render(scaleSelectorDiv);
+        (window as any).scaleDropdown.render(scaleSelectorDiv);
     }
 
     const routineSelectorDiv = document.getElementById("routine-selector-practice");
     if (routineSelectorDiv) {
-        const routineDropdown = new ComboBox(
-            "Select routine:",
-            availableRoutines,
-            (selectedRoutine: ComboBoxOption) => console.log(selectedRoutine),
-            defaultRoutine
-        );
-        routineDropdown.render(routineSelectorDiv);
+        (window as any).routineDropdown.render(routineSelectorDiv);
+    }
+
+    const start_button = document.getElementById("start-practice");
+    if (start_button) {
+        start_button.addEventListener("click", () => {
+            if (
+                !(window as any).keyDropdown ||
+                !(window as any).scaleDropdown ||
+                !(window as any).routineDropdown
+            ) {
+                return;
+            }
+            let state: RoutineConfig = {
+                keys: (window as any).keyDropdown.selectedOptions,
+                scales: (window as any).scaleDropdown.selectedOptions,
+                routineType: (window as any).routineDropdown.selectedOption,
+                randomizeKeys: false,
+                randomizeScales: false,
+            };
+            console.log(state);
+        });
     }
 });

@@ -4,7 +4,6 @@ details ul {
 }
 @media (min-width: 600px) {
     details ul {
-        max-height: 20rem;
-        overflow: auto;
+        max-height: 35vh;
     }
 }

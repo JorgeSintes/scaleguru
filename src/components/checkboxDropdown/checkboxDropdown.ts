@@ -44,21 +44,25 @@ export class CheckboxDropdown {
             const label = listItem.appendChild(document.createElement("label"));
             const checkbox = label.appendChild(document.createElement("input"));
             checkbox.type = "checkbox";
+            checkbox.value = option.toString();
             checkbox.name = option.toString();
             checkbox.defaultChecked = this.selectedOptions.includes(option);
-            checkbox.onclick = ((event: any) => {
-                if (checkbox.checked) {
-                    this.selectedOptions.push(option);
-                } else {
-                    this.selectedOptions = this.selectedOptions.filter(
-                        (selectedOption) => selectedOption !== option
-                    );
-                }
-                this.onSelectionChange(this.selectedOptions);
-            }).bind(this);
-            label.innerHTML += option.toString();
+            checkbox.addEventListener("change", () => {
+                this.handleCheckboxChange(checkbox, option);
+            });
+            checkbox.after(option.toString());
         }
+
         this.rootElement.appendChild(checkboxDiv);
+    }
+
+    handleCheckboxChange(checkbox: HTMLInputElement, option: Note | ScaleType): void {
+        if (checkbox.checked) {
+            this.selectedOptions.push(option);
+        } else {
+            this.selectedOptions = this.selectedOptions.filter((selectedOption) => selectedOption !== option);
+        }
+        this.onSelectionChange(this.selectedOptions);
     }
 
     public getSelectedOptions(): Options {
