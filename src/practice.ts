@@ -3,6 +3,7 @@ import * as Scales from "./core/scales";
 import { Routine, RoutineConfig, RoutineType } from "./core/routine";
 import { ComboBox, Option as ComboBoxOption } from "./components/comboBox";
 import { CheckboxDropdown, Options as CheckboxOptions } from "./components/checkboxDropdown/checkboxDropdown";
+import { ScaleViewPractice } from "./components/scaleViewPractice/scaleViewPractice";
 import { toggleModal } from "./components/modal";
 (window as any).toggleModal = toggleModal;
 import "../public/styles/practice.css";
@@ -86,6 +87,9 @@ defaultRoutine = defaultRoutine ? defaultRoutine : availableRoutines[0];
     (selectedRoutine: ComboBoxOption) => console.log(selectedRoutine),
     defaultRoutine
 );
+(window as any).routine = null;
+(window as any).practiceScaleView = null;
+(window as any).routineIdx = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
     const keySelectorDiv = document.getElementById("key-selector-practice");
@@ -113,14 +117,32 @@ document.addEventListener("DOMContentLoaded", () => {
             ) {
                 return;
             }
-            let state: RoutineConfig = {
-                keys: (window as any).keyDropdown.selectedOptions,
-                scales: (window as any).scaleDropdown.selectedOptions,
-                routineType: (window as any).routineDropdown.selectedOption,
+            let config: RoutineConfig = {
+                keys: (window as any).keyDropdown.getSelectedOptions(),
+                scales: (window as any).scaleDropdown.getSelectedOptions(),
+                routineType: (window as any).routineDropdown.getSelectedOption(),
                 randomizeKeys: false,
                 randomizeScales: false,
             };
-            console.log(state);
+            handleLaunch(config);
         });
     }
 });
+
+function handleLaunch(config: RoutineConfig) {
+    let configMenus = document.getElementById("config-menus") as HTMLDivElement;
+    let practiceCard = document.getElementById("scale-view-practice") as HTMLDivElement;
+    configMenus.style.display = "none";
+    (window as any).routine = new Routine(config);
+    (window as any).practiceScaleView = new ScaleViewPractice((window as any).routine, handleBack);
+    (window as any).practiceScaleView.render(practiceCard);
+}
+
+function handleBack() {
+    let configMenus = document.getElementById("config-menus") as HTMLDivElement;
+    let practiceCard = document.getElementById("scale-view-practice") as HTMLDivElement;
+    configMenus.style.display = "block";
+    (window as any).practiceScaleView.destroy();
+    (window as any).routine = null;
+    (window as any).practiceScaleView = null;
+}

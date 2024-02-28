@@ -66,7 +66,7 @@ export class CheckboxDropdown {
     }
 
     public getSelectedOptions(): Options {
-        return this.selectedOptions;
+        return this.options.filter((option) => this.selectedOptions.includes(option));
     }
 }
 

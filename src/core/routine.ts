@@ -78,7 +78,7 @@ class Routine {
     length(): number {
         return this.routine.length;
     }
-    get(index: number): IScale {
+    get_scale(index: number): IScale {
         return this.routine[index];
     }
 }

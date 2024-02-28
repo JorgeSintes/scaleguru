@@ -22,11 +22,14 @@
             </ul>
         </nav>
     </header>
+
     <main class="container">
+
         <div class="subtitle">
             <h1>Practice</h1>
             <button class="contrast" data-target="modal-example" onclick="toggleModal(event)">What is this?</button>
         </div>
+
         <dialog id="modal-example">
             <article>
                 <header>
@@ -63,24 +66,31 @@
                     </ul>
                 </p>  
                 <p>
-                    Struggling with a specific scale? Switch to <a href="./inspector.html">Inspector Mode</a>
+                    Struggling with a specific scale? Switch to <a href="./index.html">Inspector Mode</a>
                     to practice more slowly!
                 </p>
-
             </article>
         </dialog>
-        <hr>
-        <section>
-            <div id="routine-selector-practice"></div>
-        <div id="config-menus" class="grid">
-            <div id="key-selector-practice"></div>
-            <div id="scale-selector-practice"></div>
-        </div>
-        </section>
 
-        <div class="start-menu">
-            <button>Bring it on!</button>
+        <hr>
+
+        <div id="config-menus">
+            <section>
+                <div class="grid">
+                    <div id="routine-selector-practice"></div>
+                </div>
+                <div class="grid">
+                    <div id="key-selector-practice"></div>
+                    <div id="scale-selector-practice"></div>
+                </div>
+            </section>
+            <div class="start-menu">
+                <button id="start-practice">Bring it on!</button>
+            </div>
         </div>
+
+        <div id="scale-view-practice"></div>
+
     </main>
 </body>
 </html>

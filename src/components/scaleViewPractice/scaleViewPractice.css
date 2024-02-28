@@ -1,0 +1,36 @@
+.scale-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#scale-view-practice header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    justify-items: center;
+    align-items: center;
+}
+
+#scale-view-practice #back-button{
+    grid-column: 1;
+    justify-self: start;
+}
+
+#scale-view-practice header h3 {
+    margin-top: var(--pico-typography-spacing-vertical);
+}
+
+#scale-view-practice footer {
+    display: grid;
+    grid-template-columns: auto 12rem auto;
+    justify-items: center;
+    align-items: center;
+}
+
+#scale-view-practice .prev-button {
+    justify-self: end;
+}
+
+#scale-view-practice .next-button {
+    justify-self: start;
+}
