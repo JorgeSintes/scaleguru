@@ -1,0 +1,10 @@
+details ul {
+    max-height: 12rem;
+    overflow: auto;
+}
+@media (min-width: 600px) {
+    details ul {
+        max-height: 20rem;
+        overflow: auto;
+    }
+}
