@@ -1,7 +1,8 @@
 import { Note } from "../core/notes";
-import { ScaleType, MajorScale } from "../core/scales"; // Adjust the path as necessary
+import { ScaleType } from "../core/scales"; // Adjust the path as necessary
+import { RoutineType } from "../core/routine";
 
-type Option = Note | ScaleType;
+type Option = Note | ScaleType | RoutineType;
 
 export class ComboBox {
     private rootElement?: HTMLElement;
@@ -69,3 +70,5 @@ export class ComboBox {
         return this.selectedOption; // Return the currently selected scale class
     }
 }
+
+export { Option };

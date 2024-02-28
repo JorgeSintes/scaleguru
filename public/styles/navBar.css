@@ -10,3 +10,8 @@ nav img {
         display: inline;
     }
 }
+
+.subtitle {
+    display: flex;
+    justify-content: space-between;
+}

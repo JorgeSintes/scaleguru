@@ -63,7 +63,7 @@ export class ScaleView {
         }
     }
 
-    public updateComponent(newElement: Note | ScaleType): void {
+    public updateComponent(newElement: any): void {
         if (newElement instanceof Note) {
             this.root = newElement;
         } else {

@@ -18,8 +18,10 @@
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",
     "url-loader": "^4.1.1",
-    "vexflow": "^4.2.3",
     "webpack": "^5.90.3",
     "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "vexflow": "^4.2.3"
   }
 }

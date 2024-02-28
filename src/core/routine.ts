@@ -11,9 +11,9 @@ function shuffle(array: any[]): any[] {
 }
 
 enum RoutineType {
-    MantainScaleChangeKey = 0,
-    MantainKeyChangeScale = 1,
-    RandomScale = 2,
+    MantainScaleChangeKey = "Mantain scale, change key",
+    MantainKeyChangeScale = "Mantain key, change scale",
+    RandomScale = "Random scale",
 }
 
 interface RoutineConfig {
