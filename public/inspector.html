@@ -25,8 +25,34 @@
     <main class="container">
         <div class="subtitle">
             <h1>Inspector</h1>
-            <button class="contrast">What is this?</button>
+            <button class="contrast" data-target="modal-example" onclick="toggleModal(event)">What is this?</button>
         </div>
+        <dialog id="modal-example">
+            <article>
+                <header>
+                    <button 
+                        aria-label="Close"
+                        rel="prev"
+                        data-target="modal-example"
+                        onclick="toggleModal(event)"
+                    ></button>
+                    <h4>Inspector mode</h4>
+                </header>
+                <p>
+                    The <strong>inspector mode</strong> is a straightforward tool designed to help musicians 
+                    explore and understand musical scales and keys. 
+                </p>
+                <p>
+                It's ideal for beginners seeking to familiarize themselves with scales or for more experienced 
+                players looking to review the more complicated scales.
+                Simply select a key and scale to visually examine its structure and practice at your own pace. 
+                </p>
+                <p>
+                    Ready for more? Switch to <a href="./practice.html">Practice Mode</a> to test your skills!
+                </p>
+
+            </article>
+        </dialog>
         <hr>
         <div id="dropdown-menus" class="grid">
             <!-- Dropdown menus will be injected here by TypeScript -->

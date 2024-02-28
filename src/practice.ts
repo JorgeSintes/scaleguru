@@ -3,6 +3,8 @@ import * as Scales from "./core/scales";
 import { Routine, RoutineConfig, RoutineType } from "./core/routine";
 import { ComboBox, Option as ComboBoxOption } from "./components/comboBox";
 import { CheckboxDropdown, Options as CheckboxOptions } from "./components/checkboxDropdown/checkboxDropdown";
+import { toggleModal } from "./components/modal";
+(window as any).toggleModal = toggleModal;
 import "../public/styles/practice.css";
 import "../public/styles/navBar.css";
 import "../public/styles/pico.blue.css";

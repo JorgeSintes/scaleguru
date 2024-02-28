@@ -2,6 +2,8 @@ import { allKeys, Note } from "./core/notes";
 import * as Scales from "./core/scales";
 import { ComboBox } from "./components/comboBox";
 import { ScaleView } from "./components/scaleView/scaleView";
+import { toggleModal } from "./components/modal";
+(window as any).toggleModal = toggleModal;
 import "../public/styles/navBar.css";
 import "../public/styles/pico.blue.css";
 

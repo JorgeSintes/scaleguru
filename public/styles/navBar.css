@@ -15,3 +15,8 @@ nav img {
     display: flex;
     justify-content: space-between;
 }
+
+dialog p {
+    text-align: justify;
+    text-justify: inter-word;
+}

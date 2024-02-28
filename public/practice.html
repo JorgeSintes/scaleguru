@@ -25,8 +25,50 @@
     <main class="container">
         <div class="subtitle">
             <h1>Practice</h1>
-            <button class="contrast">What is this?</button>
+            <button class="contrast" data-target="modal-example" onclick="toggleModal(event)">What is this?</button>
         </div>
+        <dialog id="modal-example">
+            <article>
+                <header>
+                    <button 
+                        aria-label="Close"
+                        rel="prev"
+                        data-target="modal-example"
+                        onclick="toggleModal(event)"
+                    ></button>
+                    <h4>Practice mode</h4>
+                </header>
+                <p>
+                    The <strong>practice mode</strong>  is a functional tool designed for musicians to 
+                    refine their mastery of scales and keys. 
+                </p>  
+                <p>  
+                    Select the keys and scales you want to practice and start playing! The tool will ask for 
+                    scales in different keys and you will have to play them.
+                    Choose from different practice routines:
+                    <ul>
+                        <li>
+                            <strong>Mantain scale, change key: </strong> This mode will ask for all keys
+                            before switching to a new scale. Ideal to familiarize yourself with the sound of 
+                            a specific scale.
+                        </li>
+                        <li>
+                            <strong>Mantain key, change scale: </strong> This mode will ask for all scales
+                            before switching to a new key. 
+                        </li>
+                        <li>
+                            <strong>Random scale</strong>: The true challenge. This mode will ask for a 
+                            random scale in a random key every time.
+                        </li>
+                    </ul>
+                </p>  
+                <p>
+                    Struggling with a specific scale? Switch to <a href="./inspector.html">Inspector Mode</a>
+                    to practice more slowly!
+                </p>
+
+            </article>
+        </dialog>
         <hr>
         <section>
             <div id="routine-selector-practice"></div>
