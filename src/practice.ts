@@ -40,7 +40,7 @@ const availableScales: Scales.ScaleType[] = [
     Scales.BebopDominantScale,
     Scales.BebopDorianScale,
     Scales.BebopMelodicMinorScale,
-    Scales.WholeToneScale,
+    // Scales.WholeToneScale,
     Scales.WholeHalfDiminishedScale,
     Scales.HalfWholeDiminishedScale,
 ];
