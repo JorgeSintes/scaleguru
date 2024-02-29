@@ -5,6 +5,7 @@ import { ScaleView } from "./components/scaleView/scaleView";
 import { toggleModal } from "./components/modal";
 (window as any).toggleModal = toggleModal;
 import "../public/styles/navBar.css";
+import "../public/styles/footer.css";
 import "../public/styles/pico.blue.css";
 
 const availableScales: Scales.ScaleType[] = [
