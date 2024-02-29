@@ -11,9 +11,13 @@
     align-items: center;
 }
 
-#scale-view-practice #back-button{
+#back-button{
     grid-column: 1;
     justify-self: start;
+}
+
+#back-button svg {
+    height: 1rem;
 }
 
 #scale-view-practice header h3 {
@@ -33,4 +37,20 @@
 
 #scale-view-practice .next-button {
     justify-self: start;
+}
+
+#show-button {
+    position: absolute;
+    border: 0;
+    display: flex;
+    align-items: center;
+    color: black;
+}
+#show-button svg{
+    height: 1em;
+    margin-right: 0.4rem;
+}
+
+#scale-svg {
+    filter: blur(12px);
 }
