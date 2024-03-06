@@ -1,6 +1,8 @@
-import { Note } from "../core/notes";
-import { ScaleType } from "../core/scales"; // Adjust the path as necessary
-import { RoutineType } from "../core/routine";
+import { Note } from "../../core/notes";
+import { ScaleType } from "../../core/scales"; // Adjust the path as necessary
+import { RoutineType } from "../../core/routine";
+
+import "./comboBox.css";
 
 type Option = Note | ScaleType | RoutineType | string;
 
@@ -34,7 +36,7 @@ export class ComboBox {
         }
 
         const comboBoxDiv = document.createElement("div");
-        comboBoxDiv.classList.add("myComboBox");
+        comboBoxDiv.classList.add("combobox");
 
         const title = comboBoxDiv.appendChild(document.createElement("label"));
         title.innerText = this.title;

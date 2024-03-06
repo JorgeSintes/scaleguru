@@ -3,3 +3,15 @@
     display: flex;
     justify-content: flex-end;
 }
+
+@media (min-width: 768px) {
+    #routine-checkboxes-practice {
+        margin-left: 2rem;
+    }
+}
+
+#scale-selector-practice {
+   display: flex; 
+   flex-direction: column;
+   justify-content: end;
+}

@@ -34,7 +34,7 @@ export class CheckboxDropdown {
         }
 
         const checkboxDiv = document.createElement("div");
-        checkboxDiv.classList.add("myCheckbox");
+        checkboxDiv.classList.add("checkbox-dropdown");
 
         const dropwdown = checkboxDiv.appendChild(document.createElement("details"));
         dropwdown.classList.add("dropdown");

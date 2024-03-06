@@ -1,7 +1,10 @@
 import { availableNotes, availableScales, availableRoutines, scalePresets } from "./constants";
 
-import { Routine, RoutineConfig } from "./core/routine";
-import { ComboBox, Option as ComboBoxOption } from "./components/comboBox";
+import { Routine, RoutineConfig, RoutineType } from "./core/routine";
+
+// UI components
+import { Checkbox } from "./components/checkbox";
+import { ComboBox, Option as ComboBoxOption } from "./components/comboBox/comboBox";
 import { CheckboxDropdown, Options as CheckboxOptions } from "./components/checkboxDropdown/checkboxDropdown";
 import { ScaleViewPractice } from "./components/scaleViewPractice/scaleViewPractice";
 import { toggleModal } from "./components/modal";
@@ -51,7 +54,17 @@ defaultScalePreset = defaultScalePreset ? defaultScalePreset : availableScalePre
 (window as any).routineDropdown = new ComboBox(
     "Select routine:",
     availableRoutines,
-    (selectedRoutine: ComboBoxOption) => console.log(selectedRoutine),
+    (selectedRoutine: ComboBoxOption) => {
+        if (selectedRoutine === RoutineType.RandomScale) {
+            (window as any).randomizeKeysCheckbox.setValue(true);
+            (window as any).randomizeKeysCheckbox.disableCheckbox();
+            (window as any).randomizeScalesCheckbox.setValue(true);
+            (window as any).randomizeScalesCheckbox.disableCheckbox();
+        } else {
+            (window as any).randomizeKeysCheckbox.enableCheckbox();
+            (window as any).randomizeScalesCheckbox.enableCheckbox();
+        }
+    },
     defaultRoutine
 );
 (window as any).scalePresetDropdown = new ComboBox(
@@ -62,6 +75,27 @@ defaultScalePreset = defaultScalePreset ? defaultScalePreset : availableScalePre
         (window as any).scaleDropdown.setSelectedOptions((window as any).scalePresets[selectedPreset]);
     },
     defaultScalePreset
+);
+(window as any).randomizeKeysCheckbox = new Checkbox(
+    "randomize-keys-checkbox-practice",
+    "Randomize keys",
+    false,
+    false,
+    (value: boolean) => console.log(value)
+);
+(window as any).randomizeScalesCheckbox = new Checkbox(
+    "randomize-scales-checkbox-practice",
+    "Randomize scales",
+    false,
+    false,
+    (value: boolean) => console.log(value)
+);
+(window as any).showScalesCheckbox = new Checkbox(
+    "show-scales-checkbox-practice",
+    "Automatically show scales",
+    false,
+    false,
+    (value: boolean) => console.log(value)
 );
 (window as any).routine = null;
 (window as any).practiceScaleView = null;
@@ -83,6 +117,19 @@ document.addEventListener("DOMContentLoaded", () => {
         (window as any).routineDropdown.render(routineSelectorDiv);
     }
 
+    const randomizeKeysDiv = document.getElementById("randomize-keys-checkbox-practice");
+    if (randomizeKeysDiv) {
+        (window as any).randomizeKeysCheckbox.render(randomizeKeysDiv);
+    }
+    const randomizeScalesDiv = document.getElementById("randomize-scales-checkbox-practice");
+    if (randomizeScalesDiv) {
+        (window as any).randomizeScalesCheckbox.render(randomizeScalesDiv);
+    }
+    const showScalesDiv = document.getElementById("show-scales-checkbox-practice");
+    if (showScalesDiv) {
+        (window as any).showScalesCheckbox.render(showScalesDiv);
+    }
+
     const scalePresetSelectorDiv = document.getElementById("scale-preset-selector-practice");
     if (scalePresetSelectorDiv) {
         (window as any).scalePresetDropdown.render(scalePresetSelectorDiv);
@@ -102,8 +149,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 keys: (window as any).keyDropdown.getSelectedOptions(),
                 scales: (window as any).scaleDropdown.getSelectedOptions(),
                 routineType: (window as any).routineDropdown.getSelectedOption(),
-                randomizeKeys: false,
-                randomizeScales: false,
+                randomizeKeys: (window as any).randomizeKeysCheckbox.getValue(),
+                randomizeScales: (window as any).randomizeScalesCheckbox.getValue(),
             };
             handleLaunch(config);
         });
@@ -115,7 +162,11 @@ function handleLaunch(config: RoutineConfig) {
     let practiceCard = document.getElementById("scale-view-practice") as HTMLDivElement;
     configMenus.style.display = "none";
     (window as any).routine = new Routine(config);
-    (window as any).practiceScaleView = new ScaleViewPractice((window as any).routine, handleBack);
+    (window as any).practiceScaleView = new ScaleViewPractice(
+        (window as any).routine,
+        handleBack,
+        (window as any).showScalesCheckbox.getValue()
+    );
     (window as any).practiceScaleView.render(practiceCard);
 }
 

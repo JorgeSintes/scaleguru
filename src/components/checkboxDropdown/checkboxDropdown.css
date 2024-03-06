@@ -7,3 +7,7 @@ details ul {
         max-height: 40vh;
     }
 }
+
+.checkbox-dropdown details {
+    margin-bottom: 0px;
+}
