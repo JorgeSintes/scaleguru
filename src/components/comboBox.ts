@@ -2,7 +2,7 @@ import { Note } from "../core/notes";
 import { ScaleType } from "../core/scales"; // Adjust the path as necessary
 import { RoutineType } from "../core/routine";
 
-type Option = Note | ScaleType | RoutineType;
+type Option = Note | ScaleType | RoutineType | string;
 
 export class ComboBox {
     private rootElement?: HTMLElement;

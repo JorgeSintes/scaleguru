@@ -3,7 +3,7 @@ import { ScaleType } from "../../core/scales"; // Adjust the path as necessary
 import { RoutineType } from "../../core/routine";
 import "./checkboxDropdown.css";
 
-type Options = Array<Note | ScaleType>;
+type Options = Array<Note | ScaleType | string>;
 
 export class CheckboxDropdown {
     private rootElement?: HTMLElement;
@@ -11,6 +11,7 @@ export class CheckboxDropdown {
     private options: Options;
     private selectedOptions: Options;
     private onSelectionChange: (selectedOptions: Options) => void;
+    private checkboxes: HTMLInputElement[] = [];
 
     constructor(
         title: string,
@@ -51,22 +52,39 @@ export class CheckboxDropdown {
                 this.handleCheckboxChange(checkbox, option);
             });
             checkbox.after(option.toString());
+            this.checkboxes.push(checkbox);
         }
-
         this.rootElement.appendChild(checkboxDiv);
     }
 
-    handleCheckboxChange(checkbox: HTMLInputElement, option: Note | ScaleType): void {
+    handleCheckboxChange(checkbox: HTMLInputElement, option: Note | ScaleType | string): void {
         if (checkbox.checked) {
             this.selectedOptions.push(option);
         } else {
             this.selectedOptions = this.selectedOptions.filter((selectedOption) => selectedOption !== option);
         }
         this.onSelectionChange(this.selectedOptions);
+        if (this.rootElement) {
+            localStorage.setItem(`${this.rootElement?.id}-default`, this.selectedOptions.toString());
+        }
     }
 
     public getSelectedOptions(): Options {
         return this.options.filter((option) => this.selectedOptions.includes(option));
+    }
+    public setSelectedOptions(selectedOptions: Options): void {
+        this.selectedOptions = selectedOptions;
+        if (this.checkboxes.length > 0) {
+            this.checkboxes.forEach((checkbox) => {
+                checkbox.checked =
+                    this.selectedOptions.filter(
+                        (selectedOption) => selectedOption.toString() === checkbox.value
+                    ).length > 0;
+            });
+        }
+        if (this.rootElement) {
+            localStorage.setItem(`${this.rootElement?.id}-default`, this.selectedOptions.toString());
+        }
     }
 }
 

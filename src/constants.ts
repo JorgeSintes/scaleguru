@@ -1,0 +1,122 @@
+import { Note } from "./core/notes";
+import * as Scales from "./core/scales";
+import { RoutineType } from "./core/routine";
+
+const availableNotes: Note[] = [
+    new Note("C", 4),
+    new Note("C#", 4),
+    new Note("Db", 4),
+    new Note("D", 4),
+    new Note("D#", 4),
+    new Note("Eb", 4),
+    new Note("E", 4),
+    new Note("F", 4),
+    new Note("F#", 4),
+    new Note("Gb", 4),
+    new Note("G", 4),
+    new Note("G#", 4),
+    new Note("Ab", 4),
+    new Note("A", 4),
+    new Note("A#", 4),
+    new Note("Bb", 3),
+    new Note("B", 3),
+    new Note("Cb", 4),
+];
+
+const availableScales: Scales.ScaleType[] = [
+    Scales.MajorScale,
+    Scales.DorianScale,
+    Scales.PhrygianScale,
+    Scales.LydianScale,
+    Scales.MixolydianScale,
+    Scales.MinorScale,
+    Scales.LocrianScale,
+    Scales.MelodicMinorScale,
+    Scales.DorianFlat2Scale,
+    Scales.LydianAugmentedScale,
+    Scales.LydianDominantScale,
+    Scales.AeolianDominantScale,
+    Scales.LocrianNatural2Scale,
+    Scales.AlteredScale,
+    Scales.HarmonicMinorScale,
+    Scales.LocrianNatural6Scale,
+    Scales.AugmentedMajorScale,
+    Scales.LydianMinorScale,
+    Scales.PhrygianDominantScale,
+    Scales.LydianSharp2Scale,
+    Scales.AlteredDiminishedScale,
+    Scales.MajorPentatonicScale,
+    Scales.MinorPentatonicScale,
+    Scales.BluesScale,
+    Scales.BebopMajorScale,
+    Scales.BebopDominantScale,
+    Scales.BebopDorianScale,
+    Scales.BebopMelodicMinorScale,
+    // Scales.WholeToneScale,
+    Scales.WholeHalfDiminishedScale,
+    Scales.HalfWholeDiminishedScale,
+];
+
+const availableRoutines: RoutineType[] = [
+    RoutineType.MantainScaleChangeKey,
+    RoutineType.MantainKeyChangeScale,
+    RoutineType.RandomScale,
+];
+
+let scalePresets: { [key: string]: Scales.ScaleType[] } = {
+    "All scales": availableScales,
+    "Classical scales": [
+        Scales.MajorScale,
+        Scales.MinorScale,
+        Scales.HarmonicMinorScale,
+        Scales.MelodicMinorScale,
+    ],
+    "Bebop scales": [
+        Scales.BebopMajorScale,
+        Scales.BebopDorianScale,
+        Scales.BebopMelodicMinorScale,
+        Scales.BebopDominantScale,
+    ],
+    "Major and its modes": [
+        Scales.MajorScale,
+        Scales.DorianScale,
+        Scales.PhrygianScale,
+        Scales.LydianScale,
+        Scales.MixolydianScale,
+        Scales.MinorScale,
+        Scales.LocrianScale,
+    ],
+    "Melodic minor and its modes": [
+        Scales.MelodicMinorScale,
+        Scales.DorianFlat2Scale,
+        Scales.LydianAugmentedScale,
+        Scales.LydianDominantScale,
+        Scales.AeolianDominantScale,
+        Scales.LocrianNatural2Scale,
+        Scales.AlteredScale,
+    ],
+    "Harmonic minor and its modes": [
+        Scales.HarmonicMinorScale,
+        Scales.LocrianNatural6Scale,
+        Scales.AugmentedMajorScale,
+        Scales.LydianMinorScale,
+        Scales.PhrygianDominantScale,
+        Scales.LydianSharp2Scale,
+        Scales.AlteredDiminishedScale,
+    ],
+    "Maj7 chords": [Scales.MajorScale, Scales.LydianScale, Scales.LydianSharp2Scale, Scales.BebopMajorScale],
+    "Dom7 chords": [
+        Scales.MixolydianScale,
+        Scales.LydianDominantScale,
+        Scales.HalfWholeDiminishedScale,
+        Scales.AlteredScale,
+        Scales.PhrygianDominantScale,
+        Scales.BebopDominantScale,
+    ],
+    "min7 chords": [Scales.DorianScale, Scales.MinorScale, Scales.PhrygianScale, Scales.BebopDorianScale],
+    "Half-dim7 chords": [Scales.LocrianScale, Scales.LocrianNatural2Scale],
+    "Dim7 chords": [Scales.WholeHalfDiminishedScale, Scales.AlteredDiminishedScale],
+    "Aug7 chords": [Scales.LydianAugmentedScale, Scales.AugmentedMajorScale],
+};
+
+export { availableNotes, availableScales, availableRoutines, scalePresets };
