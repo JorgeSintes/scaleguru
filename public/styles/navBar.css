@@ -5,7 +5,7 @@ nav img {
 .brand-text {
     display: none;
 }
-@media (min-width: 600px) {
+@media (min-width: 768px) {
     .brand-text {
         display: inline;
     }
