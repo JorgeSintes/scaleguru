@@ -4,6 +4,6 @@ details ul {
 }
 @media (min-width: 600px) {
     details ul {
-        max-height: 35vh;
+        max-height: 40vh;
     }
 }

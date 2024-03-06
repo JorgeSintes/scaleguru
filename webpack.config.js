@@ -4,8 +4,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     entry: {
-        main: "./src/inspector.ts",
-        practice: "./src/practice.ts",
+        main: "./src/practice.ts",
+        inspector: "./src/inspector.ts",
     },
     output: {
         path: path.resolve(__dirname, "dist"),
@@ -58,14 +58,14 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './public/inspector.html',
+            template: './public/practice.html',
             filename: 'index.html',
             chunks: ['main']
         }),
         new HtmlWebpackPlugin({
-            template: './public/practice.html',
-            filename: 'practice.html',
-            chunks: ['practice']
+            template: './public/inspector.html',
+            filename: 'inspector.html',
+            chunks: ['inspector']
         }),
         new MiniCssExtractPlugin({
             filename: '[name].css',
