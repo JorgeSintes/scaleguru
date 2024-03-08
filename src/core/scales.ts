@@ -72,6 +72,14 @@ abstract class IScale {
         }
         return this.ascending()[degree - 1];
     }
+
+    getNumAccidentals(): number {
+        let numAccidentals = 0;
+        for (const note of this.ascending()) {
+            numAccidentals += note.getNumAccidentals();
+        }
+        return numAccidentals;
+    }
 }
 
 // Major scale and its modes
@@ -168,7 +176,7 @@ class LocrianNatural2Scale extends IScale {
 }
 
 class AlteredScale extends IScale {
-    protected distances: ReadonlyArray<string> = ["b2", "2", "b2", "2", "b2", "2", "2"];
+    protected distances: ReadonlyArray<string> = ["b2", "2", "b2", "2", "2", "2", "2"];
     static toString(): string {
         return "Altered";
     }
@@ -297,6 +305,15 @@ class HalfWholeDiminishedScale extends IScale {
     }
 }
 
+function simplifyScale(root: Note, scale: ScaleType): Note {
+    let oneScale = new scale(root);
+    let otherScale = new scale(root.enharmonicEquivalent());
+    if (oneScale.getNumAccidentals() <= otherScale.getNumAccidentals()) {
+        return root;
+    }
+    return root.enharmonicEquivalent();
+}
+
 type ScaleType =
     | typeof MajorScale
     | typeof DorianScale
@@ -364,4 +381,5 @@ export {
     WholeToneScale,
     WholeHalfDiminishedScale,
     HalfWholeDiminishedScale,
+    simplifyScale,
 };

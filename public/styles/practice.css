@@ -4,14 +4,26 @@
     justify-content: flex-end;
 }
 
+#scale-selector-practice {
+   display: flex; 
+   flex-direction: column;
+   justify-content: end;
+}
+
+.start-menu {
+    margin-top: 2rem;
+}
+
 @media (min-width: 768px) {
     #routine-checkboxes-practice {
         margin-left: 2rem;
     }
 }
 
-#scale-selector-practice {
-   display: flex; 
-   flex-direction: column;
-   justify-content: end;
+@media (min-width: 1280px) {
+    #routine-checkboxes-practice {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+    }
 }

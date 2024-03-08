@@ -138,6 +138,10 @@ class Note {
         return other.absPosition - this.absPosition;
     }
 
+    getNumAccidentals(): number {
+        return this.name.slice(1).length;
+    }
+
     reduceAccidentals(): Note {
         let reduced = reduceAccidentals(this.name, this.octave);
         return new Note(reduced.note, reduced.octave);

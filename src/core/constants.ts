@@ -1,8 +1,8 @@
-import { Note } from "./core/notes";
-import * as Scales from "./core/scales";
-import { RoutineType } from "./core/routine";
+import { Note } from "./notes";
+import * as Scales from "./scales";
+import { RoutineType } from "./routine";
 
-const availableNotes: Note[] = [
+const allNotes: Note[] = [
     new Note("C", 4),
     new Note("C#", 4),
     new Note("Db", 4),
@@ -21,6 +21,21 @@ const availableNotes: Note[] = [
     new Note("Bb", 3),
     new Note("B", 3),
     new Note("Cb", 4),
+];
+
+const enharmonicNotes: Note[] = [
+    new Note("C", 4),
+    new Note("Db", 4),
+    new Note("D", 4),
+    new Note("Eb", 4),
+    new Note("E", 4),
+    new Note("F", 4),
+    new Note("Gb", 4),
+    new Note("G", 4),
+    new Note("Ab", 4),
+    new Note("A", 4),
+    new Note("Bb", 3),
+    new Note("B", 3),
 ];
 
 const availableScales: Scales.ScaleType[] = [
@@ -119,4 +134,4 @@ let scalePresets: { [key: string]: Scales.ScaleType[] } = {
     "Aug7 chords": [Scales.LydianAugmentedScale, Scales.AugmentedMajorScale],
 };
 
-export { availableNotes, availableScales, availableRoutines, scalePresets };
+export { allNotes, enharmonicNotes, availableScales, availableRoutines, scalePresets };

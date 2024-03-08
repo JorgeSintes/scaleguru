@@ -1,4 +1,10 @@
-import { availableNotes, availableScales, availableRoutines, scalePresets } from "./constants";
+import {
+    allNotes,
+    enharmonicNotes,
+    availableScales,
+    availableRoutines,
+    scalePresets,
+} from "./core/constants";
 
 import { Routine, RoutineConfig, RoutineType } from "./core/routine";
 
@@ -8,17 +14,14 @@ import { ComboBox, Option as ComboBoxOption } from "./components/comboBox/comboB
 import { CheckboxDropdown, Options as CheckboxOptions } from "./components/checkboxDropdown/checkboxDropdown";
 import { ScaleViewPractice } from "./components/scaleViewPractice/scaleViewPractice";
 import { toggleModal } from "./components/modal";
+(window as any).allNotes = allNotes;
+(window as any).enharmonicNotes = enharmonicNotes;
 (window as any).toggleModal = toggleModal;
 
 import "../public/styles/practice.css";
 import "../public/styles/navBar.css";
 import "../public/styles/footer.css";
 import "../public/styles/pico.blue.css";
-
-const savedNotes = localStorage.getItem("key-selector-practice-default");
-let defaultNotes = savedNotes
-    ? availableNotes.filter((note) => savedNotes.split(",").includes(note.toString()))
-    : availableNotes;
 
 const savedScales = localStorage.getItem("scale-selector-practice-default");
 let defaultScales = savedScales
@@ -38,13 +41,6 @@ let defaultScalePreset = savedScalePreset
     : availableScalePresets[0];
 defaultScalePreset = defaultScalePreset ? defaultScalePreset : availableScalePresets[0];
 (window as any).scalePresets = scalePresets;
-
-(window as any).keyDropdown = new CheckboxDropdown(
-    "Select keys:",
-    availableNotes,
-    (selectedNotes: CheckboxOptions) => console.log(selectedNotes),
-    defaultNotes
-);
 (window as any).scaleDropdown = new CheckboxDropdown(
     "Select scales:",
     availableScales,
@@ -97,6 +93,13 @@ defaultScalePreset = defaultScalePreset ? defaultScalePreset : availableScalePre
     false,
     (value: boolean) => console.log(value)
 );
+(window as any).enharmonizeScalesCheckbox = new Checkbox(
+    "enharmonize-scales-checkbox-practice",
+    "Enharmonize scales",
+    true,
+    false,
+    (value: boolean) => console.log(value)
+);
 (window as any).routine = null;
 (window as any).practiceScaleView = null;
 (window as any).routineIdx = 0;
@@ -129,6 +132,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (showScalesDiv) {
         (window as any).showScalesCheckbox.render(showScalesDiv);
     }
+    const enharmonizeScalesDiv = document.getElementById("enharmonize-scales-checkbox-practice");
+    if (showScalesDiv) {
+        (window as any).enharmonizeScalesCheckbox.render(enharmonizeScalesDiv);
+    }
 
     const scalePresetSelectorDiv = document.getElementById("scale-preset-selector-practice");
     if (scalePresetSelectorDiv) {
@@ -138,19 +145,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const start_button = document.getElementById("start-practice");
     if (start_button) {
         start_button.addEventListener("click", () => {
-            if (
-                !(window as any).keyDropdown ||
-                !(window as any).scaleDropdown ||
-                !(window as any).routineDropdown
-            ) {
-                return;
-            }
             let config: RoutineConfig = {
-                keys: (window as any).keyDropdown.getSelectedOptions(),
                 scales: (window as any).scaleDropdown.getSelectedOptions(),
                 routineType: (window as any).routineDropdown.getSelectedOption(),
                 randomizeKeys: (window as any).randomizeKeysCheckbox.getValue(),
                 randomizeScales: (window as any).randomizeScalesCheckbox.getValue(),
+                enharmonizeScales: (window as any).enharmonizeScalesCheckbox.getValue(),
             };
             handleLaunch(config);
         });
