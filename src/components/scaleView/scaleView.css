@@ -8,9 +8,14 @@
     display: flex;
     justify-content: center;
     text-align: center;
-    width: 100%;
 }
 
 #scale-view-inspector header h3 {
     margin-top: var(--pico-typography-spacing-vertical);
+}
+
+#play-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

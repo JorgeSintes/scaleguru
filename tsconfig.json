@@ -12,6 +12,7 @@
         // "lib": ["ES2016", "DOM"],                                        /* Specify a set of bundled library declaration files that describe the target runtime environment. */
 
         /* Modules */
+        "moduleResolution": "node",
         "module": "ES6",                                /* Specify what module code is generated. */
         // "allowSyntheticDefaultImports": true,             /* Allow 'import x from y' when a module doesn't have a default export. */
         "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */

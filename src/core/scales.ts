@@ -28,6 +28,14 @@ abstract class IScale {
         return result;
     }
 
+    toPlayback(): string[] {
+        let result: string[] = [];
+        for (const note of this.ascending()) {
+            result.push(`${note.reduceAccidentals().toString()}${note.reduceAccidentals().octave}`);
+        }
+        return result;
+    }
+
     ascending(): Note[] {
         let result: Note[] = [this.root];
         let current = this.root;

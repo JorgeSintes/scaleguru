@@ -1,6 +1,7 @@
 import Vex from "vexflow";
 import { Note } from "../../core/notes";
 import { ScaleType } from "../../core/scales";
+import { PlaybackButton } from "../playbackButton/playbackButton";
 
 import "./scaleView.css";
 
@@ -8,7 +9,9 @@ const { Renderer, Stave } = Vex.Flow;
 
 export class ScaleView {
     private rootElement?: HTMLDivElement;
+    private title?: HTMLElement;
     private scaleContainer?: HTMLDivElement;
+    private playbackButton?: PlaybackButton;
     private root: Note;
     private scale: ScaleType;
     private renderer: any;
@@ -21,22 +24,24 @@ export class ScaleView {
 
     public render(rootElement: HTMLDivElement): void {
         this.rootElement = rootElement;
-        this.initializeVexflow();
+        this.createElements();
         this.drawScale();
     }
 
-    private initializeVexflow(): void {
+    private createElements(): void {
         if (!this.rootElement) {
             throw new Error("Root element is not defined");
         }
         const cardElement = this.rootElement.appendChild(document.createElement("article"));
-        const title = cardElement.appendChild(document.createElement("header"));
-        title.innerHTML = `<h3>${this.root.toString()} ${this.scale.toString()}</h3>`;
+        this.title = cardElement.appendChild(document.createElement("header"));
         this.scaleContainer = cardElement.appendChild(document.createElement("div"));
         this.scaleContainer.classList.add("scale-container");
-        this.renderer = new Renderer(this.scaleContainer, Renderer.Backends.SVG);
-        this.renderer.resize(this.scaleContainer.clientWidth, 200);
-        this.context = this.renderer.getContext();
+
+        const playDiv = cardElement.appendChild(document.createElement("div"));
+        playDiv.id = "play-menu";
+        this.playbackButton = new PlaybackButton(playDiv);
+        this.playbackButton.setScale(new this.scale(this.root));
+
         // this.context.setFont("Arial", 10, "").setBackgroundFillStyle("#eed");
     }
 
@@ -44,6 +49,10 @@ export class ScaleView {
         if (!this.scaleContainer) {
             throw new Error("Root element is not defined");
         }
+        this.title!.innerHTML = `<h3>${this.root.toString()} ${this.scale.toString()}</h3>`;
+        this.renderer = new Renderer(this.scaleContainer, Renderer.Backends.SVG);
+        this.renderer.resize(this.scaleContainer.clientWidth, 200);
+        this.context = this.renderer.getContext();
         const notes = new this.scale(this.root).toVexflow();
         const staveWidth = Math.min(500, this.scaleContainer.clientWidth - 40);
         const staveStartX = (this.scaleContainer.clientWidth - staveWidth) / 2;
@@ -58,8 +67,8 @@ export class ScaleView {
     }
 
     private emtpyScale(): void {
-        if (this.rootElement) {
-            this.rootElement.innerHTML = "";
+        if (this.scaleContainer) {
+            this.scaleContainer.innerHTML = "";
         }
     }
 
@@ -71,8 +80,11 @@ export class ScaleView {
         }
         if (this.rootElement) {
             this.emtpyScale();
-            this.initializeVexflow();
             this.drawScale();
+        }
+        if (this.playbackButton) {
+            this.playbackButton.stopPlayback();
+            this.playbackButton.setScale(new this.scale(this.root));
         }
     }
 }
