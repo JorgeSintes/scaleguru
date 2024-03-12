@@ -88,6 +88,14 @@ abstract class IScale {
         }
         return numAccidentals;
     }
+
+    simplify(): IScale {
+        let otherScale = new (this.constructor as any)(this.root.enharmonicEquivalent());
+        if (this.getNumAccidentals() <= otherScale.getNumAccidentals()) {
+            return this;
+        }
+        return otherScale;
+    }
 }
 
 // Major scale and its modes
@@ -313,15 +321,6 @@ class HalfWholeDiminishedScale extends IScale {
     }
 }
 
-function simplifyScale(root: Note, scale: ScaleType): Note {
-    let oneScale = new scale(root);
-    let otherScale = new scale(root.enharmonicEquivalent());
-    if (oneScale.getNumAccidentals() <= otherScale.getNumAccidentals()) {
-        return root;
-    }
-    return root.enharmonicEquivalent();
-}
-
 type ScaleType =
     | typeof MajorScale
     | typeof DorianScale
@@ -389,5 +388,4 @@ export {
     WholeToneScale,
     WholeHalfDiminishedScale,
     HalfWholeDiminishedScale,
-    simplifyScale,
 };

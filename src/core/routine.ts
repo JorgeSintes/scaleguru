@@ -1,6 +1,6 @@
 import { Note } from "./notes";
 import { allNotes, enharmonicNotes } from "./constants";
-import { IScale, ScaleType, simplifyScale } from "./scales";
+import { IScale, ScaleType } from "./scales";
 
 function shuffle(array: any[]): any[] {
     array = array.slice();
@@ -36,6 +36,7 @@ class Routine {
         this.keys = this.config.enharmonizeScales ? enharmonicNotes : allNotes;
         this.generateRoutine();
     }
+
     checkConfig(config: RoutineConfig): void {
         if (config.scales.length === 0) {
             throw new Error("Scales cannot be empty");
@@ -48,17 +49,15 @@ class Routine {
             throw new Error("Invalid routine type");
         }
     }
+
     generateRoutine(): void {
         if (this.config.routineType === RoutineType.MantainScaleChangeKey) {
             let scales = this.config.randomizeScales ? shuffle(this.config.scales) : this.config.scales;
             for (const scale of scales) {
                 let keys = this.config.randomizeKeys ? shuffle(this.keys) : this.keys;
                 for (const key of keys) {
-                    let newKey = key;
-                    if (this.config.enharmonizeScales) {
-                        newKey = simplifyScale(key, scale);
-                    }
-                    this.routine.push(new scale(newKey));
+                    let theScale = this.config.enharmonizeScales ? new scale(key).simplify() : new scale(key);
+                    this.routine.push(theScale);
                 }
             }
         } else if (this.config.routineType === RoutineType.MantainKeyChangeScale) {
@@ -66,30 +65,26 @@ class Routine {
             for (const key of keys) {
                 let scales = this.config.randomizeScales ? shuffle(this.config.scales) : this.config.scales;
                 for (const scale of scales) {
-                    let newKey = key;
-                    if (this.config.enharmonizeScales) {
-                        newKey = simplifyScale(key, scale);
-                    }
-                    this.routine.push(new scale(newKey));
+                    let theScale = this.config.enharmonizeScales ? new scale(key).simplify() : new scale(key);
+                    this.routine.push(theScale);
                 }
             }
         } else if (this.config.routineType === RoutineType.RandomScale) {
             let temp_routine: IScale[] = [];
             for (const key of this.keys) {
                 for (const scale of this.config.scales) {
-                    let newKey = key;
-                    if (this.config.enharmonizeScales) {
-                        newKey = simplifyScale(key, scale);
-                    }
-                    temp_routine.push(new scale(newKey));
+                    let theScale = this.config.enharmonizeScales ? new scale(key).simplify() : new scale(key);
+                    temp_routine.push(theScale);
                 }
             }
             this.routine = shuffle(temp_routine);
         }
     }
+
     length(): number {
         return this.routine.length;
     }
+
     get_scale(index: number): IScale {
         return this.routine[index];
     }

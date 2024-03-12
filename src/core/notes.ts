@@ -4,25 +4,6 @@ const noteNamesF = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", 
 const noteNamesS = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 const circleFifths = ["F", "C", "G", "D", "A", "E", "B"];
 const naturalNoteNames = ["C", "D", "E", "F", "G", "A", "B"];
-const allKeys = [
-    "C",
-    "C#",
-    "Db",
-    "D",
-    "D#",
-    "Eb",
-    "E",
-    "F",
-    "F#",
-    "Gb",
-    "G",
-    "G#",
-    "Ab",
-    "A",
-    "A#",
-    "Bb",
-    "B",
-];
 
 function isValidNoteName(noteName: string): boolean {
     if (!circleFifths.includes(noteName[0])) {
@@ -79,7 +60,7 @@ function reduceAccidentals(note: string, octave: number): { note: string; octave
     };
 }
 
-class Note {
+export class Note {
     name: string;
     position: number;
     octave: number;
@@ -148,6 +129,9 @@ class Note {
     }
 
     enharmonicEquivalent(): Note {
+        if (!noteNamesF.includes(this.name) && !noteNamesS.includes(this.name)) {
+            return this.reduceAccidentals();
+        }
         if (noteNamesF.includes(this.name)) {
             return new Note(noteNamesS[this.position], this.octave);
         }
@@ -254,5 +238,3 @@ class Note {
         return Note.fromAbsPosition(naturalNoteNames[nextNoteIdx], this.absPosition + 11);
     }
 }
-
-export { Note, allKeys };
