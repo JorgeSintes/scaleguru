@@ -1,6 +1,5 @@
 import { IScale } from "../../core/scales";
-import { Piano } from "@tonejs/piano";
-import * as Tone from "tone";
+import { PianoService } from "../pianoService";
 
 import "./playbackButton.css";
 
@@ -11,73 +10,48 @@ const stopButtonIcon =
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 128C0 92.7 28.7 64 64 64H320c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128z"/></svg>';
 
 export class PlaybackButton {
-    rootElement: HTMLDivElement;
-    piano: Piano;
+    rootElement?: HTMLDivElement;
     playButton: HTMLButtonElement;
-    isPlaying: boolean = false;
+    pianoService: PianoService;
     scale?: IScale;
 
-    constructor(rootElement: HTMLDivElement) {
-        this.rootElement = rootElement;
-        this.playButton = rootElement.appendChild(document.createElement("button"));
+    constructor() {
+        this.playButton = document.createElement("button");
         let loading = this.playButton.appendChild(document.createElement("div"));
         loading.ariaBusy = "true";
         loading.id = "loading";
         // this.playButton.disabled = true;
         this.playButton.id = "play-button";
-        this.piano = new Piano({ velocities: 4 });
-        this.piano.toDestination();
-        this.piano.load().then(() => {
+        this.pianoService = new PianoService();
+        this.pianoService.load().then(() => {
             this.playButton.removeAttribute("aria-busy");
             this.playButton.innerHTML = playButtonIcon;
             this.playButton.disabled = false;
             this.playButton.addEventListener("click", () => {
-                if (!this.isPlaying) {
-                    this.playScale();
+                if (!this.pianoService.isPlaying) {
+                    this.play();
                 } else {
-                    this.stopPlayback();
+                    this.stop();
                 }
             });
         });
     }
 
-    playScale() {
-        if (!this.scale) {
-            return;
-        }
-        if (!this.isPlaying) {
-            // Scale notes
-            var pattern = new Tone.Pattern(
-                (time: number, note: string) => {
-                    // Play note on the piano with defined velocity and duration
-                    this.piano.keyDown({ note: note, velocity: 0.5, time: time });
-                    this.piano.keyUp({ note: note, time: time + Tone.Time("4n").toSeconds() }); // assuming quarter note releases
-                },
-                this.scale.toPlayback(),
-                "up"
-            );
-
-            pattern.iterations = this.scale.toPlayback().length;
-            Tone.Transport.bpm.value = 120;
-            Tone.start();
-            pattern.start(0);
-            Tone.Transport.start("+0.1");
-
-            Tone.Transport.scheduleOnce(() => {
-                this.stopPlayback();
-            }, `+${(60 / Tone.Transport.bpm.value) * this.scale.toPlayback().length}`);
-            this.playButton.innerHTML = stopButtonIcon;
-            this.isPlaying = true;
-        }
+    render(rootElement: HTMLDivElement) {
+        this.rootElement = rootElement;
+        rootElement.appendChild(this.playButton);
     }
 
-    stopPlayback() {
-        if (this.isPlaying) {
-            Tone.Transport.stop();
-            Tone.Transport.cancel(0);
-            this.isPlaying = false;
+    play() {
+        this.pianoService.playScale(this.scale!, () => {
             this.playButton.innerHTML = playButtonIcon;
-        }
+        });
+        this.playButton.innerHTML = stopButtonIcon;
+    }
+
+    stop() {
+        this.pianoService.stopPlayback();
+        this.playButton.innerHTML = playButtonIcon;
     }
 
     setScale(scale: IScale) {

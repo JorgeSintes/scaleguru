@@ -1,75 +1,19 @@
-import { Note } from "./core/notes";
-import * as Scales from "./core/scales";
+import { availableScales, allNotes } from "./core/constants";
+
 import { ComboBox } from "./components/comboBox/comboBox";
 import { ScaleView } from "./components/scaleView/scaleView";
 import { toggleModal } from "./components/modal";
 (window as any).toggleModal = toggleModal;
+
 import "../public/styles/navBar.css";
 import "../public/styles/footer.css";
 import "../public/styles/pico.blue.css";
 
-const availableScales: Scales.ScaleType[] = [
-    Scales.MajorScale,
-    Scales.DorianScale,
-    Scales.PhrygianScale,
-    Scales.LydianScale,
-    Scales.MixolydianScale,
-    Scales.MinorScale,
-    Scales.LocrianScale,
-    Scales.MelodicMinorScale,
-    Scales.DorianFlat2Scale,
-    Scales.LydianAugmentedScale,
-    Scales.LydianDominantScale,
-    Scales.AeolianDominantScale,
-    Scales.LocrianNatural2Scale,
-    Scales.AlteredScale,
-    Scales.HarmonicMinorScale,
-    Scales.LocrianNatural6Scale,
-    Scales.AugmentedMajorScale,
-    Scales.LydianMinorScale,
-    Scales.PhrygianDominantScale,
-    Scales.LydianSharp2Scale,
-    Scales.AlteredDiminishedScale,
-    Scales.MajorPentatonicScale,
-    Scales.MinorPentatonicScale,
-    Scales.BluesScale,
-    Scales.BebopMajorScale,
-    Scales.BebopDominantScale,
-    Scales.BebopDorianScale,
-    Scales.BebopMelodicMinorScale,
-    // Scales.WholeToneScale,
-    Scales.WholeHalfDiminishedScale,
-    Scales.HalfWholeDiminishedScale,
-];
-
-const availableNotes: Note[] = [
-    new Note("C", 4),
-    new Note("C#", 4),
-    new Note("Db", 4),
-    new Note("D", 4),
-    new Note("D#", 4),
-    new Note("Eb", 4),
-    new Note("E", 4),
-    new Note("F", 4),
-    new Note("F#", 4),
-    new Note("Gb", 4),
-    new Note("G", 4),
-    new Note("G#", 4),
-    new Note("Ab", 4),
-    new Note("A", 4),
-    new Note("A#", 4),
-    new Note("Bb", 3),
-    new Note("B", 3),
-    new Note("Cb", 4),
-];
-
 document.addEventListener("DOMContentLoaded", () => {
     // Get cached values or use the first available note and scale
     const savedKey = localStorage.getItem("key-selector-inspector-default");
-    let defaultKey = savedKey
-        ? availableNotes.find((note) => note.toString() === savedKey)
-        : availableNotes[0];
-    defaultKey = defaultKey ? defaultKey : availableNotes[0];
+    let defaultKey = savedKey ? allNotes.find((note) => note.toString() === savedKey) : allNotes[0];
+    defaultKey = defaultKey ? defaultKey : allNotes[0];
     const savedScale = localStorage.getItem("scale-selector-inspector-default");
     let defaultScale = savedScale
         ? availableScales.find((scale) => scale.toString() === savedScale)
@@ -87,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (scaleView && keySelectorDiv) {
         const keyDropdown = new ComboBox(
             "Select key:",
-            availableNotes,
+            allNotes,
             scaleView.updateComponent.bind(scaleView),
             defaultKey
         );

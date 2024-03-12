@@ -1,6 +1,4 @@
 import Vex from "vexflow";
-import { Note } from "../../core/notes";
-import { IScale } from "../../core/scales";
 import { Routine } from "../../core/routine";
 
 import "./scaleViewPractice.css";
@@ -64,7 +62,7 @@ export class ScaleViewPractice {
         this.prev_button.innerHTML = "Prev";
         this.prev_button.disabled = true;
         this.scale_number = footer.appendChild(document.createElement("div"));
-        this.scale_number.innerHTML = `Scale ${this.idx + 1}/${this.routine.length()}`;
+        this.scale_number.innerHTML = `${this.idx + 1}/${this.routine.length()}`;
         this.next_button = footer.appendChild(document.createElement("button"));
         this.next_button.classList.add("next-button");
         this.next_button.addEventListener("click", () => {
@@ -133,7 +131,7 @@ export class ScaleViewPractice {
         if (this.next_button.disabled) {
             this.next_button.disabled = false;
         }
-        this.scale_number.innerHTML = `Scale ${this.idx + 1}/${this.routine.length()}`;
+        this.scale_number.innerHTML = `${this.idx + 1}/${this.routine.length()}`;
     }
 
     private nextScale(): void {
@@ -147,7 +145,7 @@ export class ScaleViewPractice {
         if (this.prev_button.disabled) {
             this.prev_button.disabled = false;
         }
-        this.scale_number.innerHTML = `Scale ${this.idx + 1}/${this.routine.length()}`;
+        this.scale_number.innerHTML = `${this.idx + 1}/${this.routine.length()}`;
     }
 
     destroy() {

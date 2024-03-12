@@ -39,7 +39,8 @@ export class ScaleView {
 
         const playDiv = cardElement.appendChild(document.createElement("div"));
         playDiv.id = "play-menu";
-        this.playbackButton = new PlaybackButton(playDiv);
+        this.playbackButton = new PlaybackButton();
+        this.playbackButton.render(playDiv);
         this.playbackButton.setScale(new this.scale(this.root));
 
         // this.context.setFont("Arial", 10, "").setBackgroundFillStyle("#eed");
@@ -83,7 +84,7 @@ export class ScaleView {
             this.drawScale();
         }
         if (this.playbackButton) {
-            this.playbackButton.stopPlayback();
+            this.playbackButton.stop();
             this.playbackButton.setScale(new this.scale(this.root));
         }
     }
