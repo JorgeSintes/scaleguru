@@ -2,12 +2,15 @@ import Vex from "vexflow";
 import { Routine } from "../../core/routine";
 
 import "./scaleViewPractice.css";
+import { PianoService } from "../pianoService";
+import { PlaybackButton } from "../playbackButton/playbackButton";
 
 const { Renderer, Stave } = Vex.Flow;
 
 export class ScaleViewPractice {
     private rootElement?: HTMLDivElement;
     private scaleContainer?: HTMLDivElement;
+    private playBackButton?: PlaybackButton;
     private routine: Routine;
     private renderer: any;
     private context: any;
@@ -48,10 +51,16 @@ export class ScaleViewPractice {
         };
         this.title_element = title.appendChild(document.createElement("h3"));
         title.appendChild(document.createElement("div"));
+
         this.scaleContainer = cardElement.appendChild(document.createElement("div"));
         this.scaleContainer.classList.add("scale-container");
         // this.scaleContainer.style.visibility = "hidden";
         // this.context.setFont("Arial", 10, "").setBackgroundFillStyle("#eed");
+
+        const playDiv = cardElement.appendChild(document.createElement("div"));
+        playDiv.id = "play-menu";
+        this.playBackButton = new PlaybackButton();
+        this.playBackButton.render(playDiv);
 
         const footer = cardElement.appendChild(document.createElement("footer"));
         this.prev_button = footer.appendChild(document.createElement("button"));
@@ -61,6 +70,7 @@ export class ScaleViewPractice {
         });
         this.prev_button.innerHTML = "Prev";
         this.prev_button.disabled = true;
+
         this.scale_number = footer.appendChild(document.createElement("div"));
         this.scale_number.innerHTML = `${this.idx + 1}/${this.routine.length()}`;
         this.next_button = footer.appendChild(document.createElement("button"));
@@ -118,9 +128,13 @@ export class ScaleViewPractice {
                 }
             };
         }
+        this.playBackButton?.setScale(scale);
     }
 
     private prevScale(): void {
+        if (this.playBackButton && this.playBackButton.isPlaying()) {
+            this.playBackButton.stop();
+        }
         if (this.idx > 0) {
             this.idx--;
             this.drawScale();
@@ -135,6 +149,9 @@ export class ScaleViewPractice {
     }
 
     private nextScale(): void {
+        if (this.playBackButton && this.playBackButton.isPlaying()) {
+            this.playBackButton.stop();
+        }
         if (this.idx < this.routine.length() - 1) {
             this.idx++;
             this.drawScale();
@@ -149,6 +166,9 @@ export class ScaleViewPractice {
     }
 
     destroy() {
+        if (this.playBackButton) {
+            this.playBackButton.stop();
+        }
         if (this.rootElement) {
             this.rootElement.innerHTML = "";
         }

@@ -10,7 +10,15 @@ export class PianoService {
     isPlaying: boolean;
 
     constructor() {
-        this.piano = new Piano({ velocities: 4 });
+        this.piano = new Piano({
+            velocities: 1,
+            minNote: 46,
+            maxNote: 58,
+            release: false,
+            pedal: false,
+            maxPolyphony: 1,
+        });
+        // this.piano = new Piano({ velocities: 4 });
         this.bpm = 60;
         this.isLoaded = false;
         this.isPlaying = false;

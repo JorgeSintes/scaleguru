@@ -14,6 +14,7 @@ import { ComboBox, Option as ComboBoxOption } from "./components/comboBox/comboB
 import { CheckboxDropdown, Options as CheckboxOptions } from "./components/checkboxDropdown/checkboxDropdown";
 import { ScaleViewPractice } from "./components/scaleViewPractice/scaleViewPractice";
 import { toggleModal } from "./components/modal";
+
 (window as any).allNotes = allNotes;
 (window as any).enharmonicNotes = enharmonicNotes;
 (window as any).toggleModal = toggleModal;
@@ -100,6 +101,7 @@ defaultScalePreset = defaultScalePreset ? defaultScalePreset : availableScalePre
     false,
     (value: boolean) => console.log(value)
 );
+
 (window as any).routine = null;
 (window as any).practiceScaleView = null;
 (window as any).routineIdx = 0;

@@ -54,3 +54,9 @@
 #scale-svg {
     filter: blur(12px);
 }
+
+#play-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

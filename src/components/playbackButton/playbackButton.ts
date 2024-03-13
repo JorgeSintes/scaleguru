@@ -57,4 +57,8 @@ export class PlaybackButton {
     setScale(scale: IScale) {
         this.scale = scale;
     }
+
+    isPlaying(): boolean {
+        return this.pianoService.isPlaying;
+    }
 }
