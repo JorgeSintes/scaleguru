@@ -12,11 +12,11 @@ export class PianoService {
     constructor() {
         this.piano = new Piano({
             velocities: 1,
-            minNote: 46,
-            maxNote: 70,
-            release: false,
-            pedal: false,
-            maxPolyphony: 1,
+            // minNote: 46,
+            // maxNote: 70,
+            // release: false,
+            // pedal: false,
+            // maxPolyphony: 1,
         });
         // this.piano = new Piano({ velocities: 4 });
         this.bpm = 60;
