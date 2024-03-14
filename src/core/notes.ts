@@ -1,4 +1,5 @@
-import Vex from "vexflow";
+import { Vex } from "vexflow";
+const { StaveNote, Accidental } = Vex.Flow;
 
 const noteNamesF = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
 const noteNamesS = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
@@ -95,21 +96,21 @@ export class Note {
     toString(): string {
         return `${this.name}`;
     }
-    toVexflow(): Vex.Flow.StaveNote {
+    toVexflow(): any {
         let name: string = this.name;
         let accidental: string = "";
         if (name.length > 1) {
             accidental = name.slice(1);
             name = name[0];
         }
-        let vexNote = new Vex.Flow.StaveNote({
+        let vexNote = new StaveNote({
             keys: [name + `/${this.octave}`],
             duration: "q",
         });
         if (accidental.length > 0) {
-            vexNote.addModifier(new Vex.Flow.Accidental(accidental), 0);
+            vexNote.addModifier(new Accidental(accidental), 0);
         }
-        return vexNote;
+        return vexNote as any;
     }
 
     equals(other: Note): boolean {

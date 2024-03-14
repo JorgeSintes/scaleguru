@@ -1,11 +1,12 @@
-import Vex from "vexflow";
 import { Note } from "../../core/notes";
 import { ScaleType } from "../../core/scales";
+
 import { PlaybackButton } from "../playbackButton/playbackButton";
 
-import "./scaleView.css";
+import { Vex } from "vexflow";
+const { Voice, Renderer, Stave, Formatter } = Vex.Flow;
 
-const { Renderer, Stave } = Vex.Flow;
+import "./scaleView.css";
 
 export class ScaleView {
     private rootElement?: HTMLDivElement;
@@ -60,10 +61,10 @@ export class ScaleView {
         const stave = new Stave(staveStartX, 40, staveWidth);
         stave.addClef("treble").setContext(this.context).draw();
 
-        const voice = new Vex.Flow.Voice({ num_beats: notes.length, beat_value: 4 });
+        const voice = new Voice({ num_beats: notes.length, beat_value: 4 });
         voice.addTickables(notes);
 
-        new Vex.Flow.Formatter().joinVoices([voice]).format([voice], staveWidth - 50);
+        new Formatter().joinVoices([voice]).format([voice], staveWidth - 50);
         voice.draw(this.context, stave);
     }
 

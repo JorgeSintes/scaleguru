@@ -11,10 +11,16 @@ module.exports = merge(common, {
         clean: true, // Clean the /dist folder before each build
     },
     plugins: [
-        // Production specific plugins like MiniCssExtractPlugin
+        // new webpack.DefinePlugin({
+        //     'process.env.NODE_ENV': JSON.stringify('production'),
+        // }),
     ],
     optimization: {
         minimize: true,
+        usedExports: true,
         // More optimization options can be added here
     },
+    externals: {
+        "vexflow": "Vex",
+    }
 });
