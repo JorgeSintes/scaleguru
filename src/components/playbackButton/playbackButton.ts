@@ -1,5 +1,5 @@
 import { IScale } from "../../core/scales";
-import { PianoService } from "../pianoService";
+import { PianoService } from "../../core/pianoService";
 
 import "./playbackButton.css";
 

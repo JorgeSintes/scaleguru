@@ -22,5 +22,6 @@ module.exports = merge(common, {
     },
     externals: {
         "vexflow": "Vex",
+        "tone": "Tone",
     }
 });

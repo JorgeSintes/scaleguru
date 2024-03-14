@@ -1,6 +1,6 @@
 import { Piano } from "@tonejs/piano";
-import * as Tone from "tone";
-import { IScale } from "../core/scales";
+import { Pattern, Time, Transport, start } from "tone";
+import { IScale } from "./scales";
 
 export class PianoService {
     private static instance: PianoService;
@@ -13,7 +13,7 @@ export class PianoService {
         this.piano = new Piano({
             velocities: 1,
             minNote: 46,
-            maxNote: 58,
+            maxNote: 70,
             release: false,
             pedal: false,
             maxPolyphony: 1,
@@ -39,34 +39,34 @@ export class PianoService {
         }
         if (!this.isPlaying) {
             // Scale notes
-            var pattern = new Tone.Pattern(
+            var pattern = new Pattern(
                 (time: number, note: string) => {
                     // Play note on the piano with defined velocity and duration
                     this.piano.keyDown({ note: note, velocity: 0.5, time: time });
-                    this.piano.keyUp({ note: note, time: time + Tone.Time("4n").toSeconds() }); // assuming quarter note releases
+                    this.piano.keyUp({ note: note, time: time + Time("4n").toSeconds() }); // assuming quarter note releases
                 },
                 scale.toPlayback(),
                 "up"
             );
 
             pattern.iterations = scale.toPlayback().length;
-            Tone.Transport.bpm.value = 120;
-            Tone.start();
+            Transport.bpm.value = 120;
+            start();
             pattern.start(0);
-            Tone.Transport.start("+0.1");
+            Transport.start("+0.1");
 
-            Tone.Transport.scheduleOnce(() => {
+            Transport.scheduleOnce(() => {
                 this.stopPlayback();
                 afterPlay();
-            }, `+${(60 / Tone.Transport.bpm.value) * scale.toPlayback().length}`);
+            }, `+${(60 / Transport.bpm.value) * scale.toPlayback().length}`);
             this.isPlaying = true;
         }
     }
 
     public stopPlayback(): void {
         if (this.isPlaying) {
-            Tone.Transport.stop();
-            Tone.Transport.cancel(0);
+            Transport.stop();
+            Transport.cancel(0);
             this.isPlaying = false;
         }
     }
